@@ -9,7 +9,7 @@ The repo will implement a mini-twitter. The first iteration will
 - allow users to have a username and a password
 - allow users to signup, signin, delete account
 - allow users to change password
-- allow users to create, read, update, delete 120 chars tweets
+- allow users to create, read, update, delete 250 chars tweets
 - allow users to have a profile with all of their past tweets
 - allow users to follow other users, view who they are following and
 who follows them

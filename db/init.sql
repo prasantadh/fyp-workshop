@@ -18,9 +18,6 @@ CREATE table follows (
 
 CREATE table tweets (
   id BIGSERIAL PRIMARY KEY,
-  -- TODO this here is a 250 character limit
-  -- on the documentation somewhere, I have 120 character limit
-  -- fix the documentation later on
   content VARCHAR(250) NOT NULL,
   user_id BIGINT NOT NULL,
   created_at TIMESTAMP NOT NULL,

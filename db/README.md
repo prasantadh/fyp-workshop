@@ -3,7 +3,7 @@
 ## Business Rules
 
 - A user has a username, and a password, and many tweets
-- A tweet has a content (120 characters, text only) and
+- A tweet has a content (250 characters, text only) and
 a timestamp for when it was created
 - A followed (user) can have many followers
 - A follower (user) can follow many followed (users)
