@@ -11,8 +11,8 @@ INSERT INTO follows(follower, followed) VALUES
   (2, 3),
   (3, 2);
 
-INSERT INTO tweets(content, user_id) VALUES
-  ('I am user1', 1),
-  ('I am user2', 2),
-  ('I am user3', 3),
-  ('I am user4', 4);
+INSERT INTO tweets(content, user_id, created_at) VALUES
+  ('I am user1', 1, current_timestamp),
+  ('I am user2', 2, current_timestamp),
+  ('I am user3', 3, current_timestamp),
+  ('I am user4', 4, current_timestamp);
