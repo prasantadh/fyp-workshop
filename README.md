@@ -23,6 +23,7 @@ The goals of the repo is to be
   - Do we need a database? Yes.
   - Do we need an ORM? May be not. Once you know working with databases,
   an ORM will help. Full-stack frameworks will often manage migrations for you too.
+  They often also help generate fake data for testing.
   However, these are conveniences once you know what you are doing--not necessarily
   the best entry tools.
   - In essence, if there is a simpler solution available to achieve our goals,
