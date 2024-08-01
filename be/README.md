@@ -25,3 +25,8 @@ require a JWT token with the `Authorization: Bearer JWT-TOKEN` header.
 | `GET /tweets/:id` | read a tweet | | <code>{"status": "success/failure", data="content of the tweet"}</code> |
 | `[+] PATCH /tweets/:id` | update a tweet | <code>{"content": "<>"}</code> | <code>{"status": "success/failure"}</code> |
 | `[+] DELETE /tweets/:id` | delete a tweet | | <code>{"status": "success/failure"}</code> |
+
+## Files
+
+- `db.py` has python code to connect with and operate on the database.
+The file also has some unit tests that can be run with `python db.py`
