@@ -1,6 +1,8 @@
 from sqlalchemy import create_engine
 from sqlalchemy.sql import text
 
+import unittest
+
 # FIXME it seems psychopg2 needs to be installed
 # for docker to be able to access postgresql
 # will also need CREATE EXTENSION pgcrypto
@@ -23,14 +25,77 @@ def get_user(id):
     stmt = text("select id, username from users where id=:id")
     params = {"id": id}
     result = run_query(stmt, params)
-    return result.mappings().all()
+    result = result.mappings().all()
+    return {} if len(result) == 0 else result[0]
 
 def get_users():
     stmt = text("select id, username from users")
     params = {}
     result = run_query(stmt, params)
-    result.mappings().all()
+    return result.mappings().all()
 
-create_user("p", "jpt")
-get_user(1)
-get_users()
+def login_user(username, password):
+    # https://docs.vultr.com/how-to-securely-store-passwords-using-postgresql
+    stmt = text("select id, (password = crypt(:password, password)) as match from users where username=:username")
+    params = {"username": username, "password": password}
+    result = run_query(stmt, params)
+    result = result.mappings().all()
+    return {} if len(result) == 0 else result[0]
+
+def change_password(id, password):
+    stmt = text("update users set password=crypt(:password, gen_salt('bf')) where id=:id returning id")
+    params = {'id': id, 'password': password}
+    result = run_query(stmt, params)
+    result = result.mappings().all()
+    return {} if len(result) == 0 else result[0]
+
+def delete_user(id):
+    stmt = text("delete from users where id=:id returning id")
+    params = {'id': id}
+    result = run_query(stmt, params)
+    result = result.mappings().all()
+    return {} if len(result) == 0 else result[0]
+
+# FIXME while we use seed.sql to populate data and test
+# each test case should create its own data and cleanup afterwards
+# this is because unittests can run in any order
+class TestDbFunctions(unittest.TestCase):
+    def test_get_user_works(self):
+        self.assertEqual(get_user(1), {'id': 1, 'username': 'user1'}, "Should be user with id 1")
+        self.assertEqual(get_user(100), {}, "Should not return user")
+
+    def test_get_users_works(self):
+        self.assertEqual(True, True)
+        self.assertTrue({'id': 1, 'username': 'user1'} in get_users())
+        self.assertTrue({'id': 2, 'username': 'user2'} in get_users())
+        self.assertTrue({'id': 3, 'username': 'user3'} in get_users())
+        self.assertTrue({'id': 4, 'username': 'user4'} in get_users())
+
+    def test_login_user_works(self):
+        self.assertEqual(login_user('user1', 'password1'), {'id': 1, 'match': True})
+        self.assertEqual(login_user('user1', 'password2'), {'id': 1, 'match': False})
+        self.assertEqual(login_user('user50', 'password2'), {})
+
+    def test_change_password_works(self):
+        self.assertEqual(change_password(2, '2password'), {'id': 2})
+        self.assertEqual(login_user('user2', '2password'), {'id': 2, 'match': True})
+
+    def test_create_user_works(self):
+        self.assertEqual(create_user('user5', 'password5'), {'id': 5})
+        # FIXME we haven't looked into what happens in failing
+        # conditions. for example, what if we try to create the user
+        # with already existing username? Currently, this crashes
+        # the program. We are expected to handle this with a 
+        # try...except block.
+        # self.assertEqual(create_user('user5', 'password5'), {'id': 5})
+    
+    def test_delete_user_works(self):
+        result = create_user('user6', 'password6')
+        self.assertEqual(delete_user(result['id']), result)
+
+    
+    # TODO should test create users but will do that later
+    # as that impacts the state of database fixtures
+if __name__ == '__main__':
+    unittest.main()
+
