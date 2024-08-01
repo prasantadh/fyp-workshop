@@ -16,7 +16,7 @@ require a JWT token with the `Authorization: Bearer JWT-TOKEN` header.
 | `GET /users/:id` | view a user profile with id=:id | | <code>{"status": "success/failure", "data": {"username": "", "tweets": ["", ..., ]}}</code> |
 | `GET /users` | view a list of all users | | <code>{"status": "success/failure", "data": [{"id": "<>", "username": "<>"}]</code> |
 | `POST /users` | login | <code>{"username": "<>", "password": "<>"}</code>| <code>{"status": "success/failure", "data": "jwt token"}</code> |
-| `[+] PATCH /users` | update username and/or password | <code>{"username": "<>", "password": "<>"}</code> | <code>{"status": "success/failure"}</code>|
+| `[+] PATCH /users` | update password | <code>{"password": "<>"}</code> | <code>{"status": "success/failure"}</code>|
 | `[+] DELETE /users` | delete a user | | <code>{ "status" : "success/failure" } </code> |
 | `[+] PUT /follows/:id` | follow a user with id=:id | | <code>{"status": "success/failure"}</code> |
 | `[+] GET /follows` | get followed users for current user| | <code>{"status": "success", "data": [user_id1, user_id2, ...]</code> |
