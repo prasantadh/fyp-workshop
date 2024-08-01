@@ -1,8 +1,8 @@
 INSERT INTO users (username, password) VALUES 
-  ('user1', 'password1'),
-  ('user2', 'password2'),
-  ('user3', 'password3'),
-  ('user4', 'password4')
+  ('user1', crypt('password1', gen_salt('bf'))),
+  ('user2', crypt('password2', gen_salt('bf'))),
+  ('user3', crypt('password3', gen_salt('bf'))),
+  ('user4', crypt('password4', gen_salt('bf')))
 ;
 
 INSERT INTO follows(follower, followed) VALUES 
