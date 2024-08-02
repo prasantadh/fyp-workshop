@@ -10,7 +10,7 @@ require a JWT token with the `Authorization: Bearer JWT-TOKEN` header.
 
 | Endpoint | Purpose | Request | Response |
 |----------|---------|---------|----------|
-| `[+] PUT /users` | register a user | <code>{"username": "<>", "password": "<>"}</code> | <code>{"status": "success/failure"}</code> |
+| `PUT /users` | register a user | <code>{"username": "<>", "password": "<>"}</code> | <code>{"status": "success/failure"}</code> |
 | `GET /users/:id` | view a user profile with id=:id | | <code>{"status": "success/failure", "data": {"username": "", "tweets": ["", ..., ]}}</code> |
 | `GET /users` | view a list of all users | | <code>{"status": "success/failure", "data": [{"id": "<>", "username": "<>"}]</code> |
 | `POST /users` | login | <code>{"username": "<>", "password": "<>"}</code>| <code>{"status": "success/failure", "data": "jwt token"}</code> |
