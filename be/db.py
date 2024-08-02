@@ -8,6 +8,8 @@ import unittest
 # will also need CREATE EXTENSION pgcrypto
 # Picked SQL Alchemy because it also supports ORM if needed
 
+# FIXME add function hints on documentation
+
 def run_query(stmt, params):
     # FIXME use environment variable for secrets
     engine = create_engine("postgresql://bhakku@localhost:5432/twitter")
