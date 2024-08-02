@@ -22,6 +22,7 @@ require a JWT token with the `Authorization: Bearer JWT-TOKEN` header.
 | `[+] DELETE /follows/:id` | unfollow a user with id=:id | | <code>{"status": "success/failure"}</code> |
 | `[+] PUT /tweets` | add a tweet for current user | <code>{"content": "<>"}</code> | <code>{"status": "success/failure"}</code> |
 | `GET /tweets/:id` | read a tweet | | <code>{"status": "success/failure", data="content of the tweet"}</code> |
+| `GET /users/:id/tweets` |read all tweets from a user| | <code>{"status": "success/failure", data="content of the tweet"}</code> |
 | `[+] PATCH /tweets/:id` | update a tweet | <code>{"content": "<>"}</code> | <code>{"status": "success/failure"}</code> |
 | `[+] DELETE /tweets/:id` | delete a tweet | | <code>{"status": "success/failure"}</code> |
 
