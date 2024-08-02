@@ -30,3 +30,6 @@ require a JWT token with the `Authorization: Bearer JWT-TOKEN` header.
 
 - `db.py` has python code to connect with and operate on the database.
 The file also has some unit tests that can be run with `python db.py`
+- `app.py` has python code to serve web-endpoints by connecting incoming
+request to the database functions in `db.py`. Run the web-server using
+`python app.py`

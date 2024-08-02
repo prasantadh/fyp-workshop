@@ -52,3 +52,12 @@ docker compose up
 Please have a descriptive git commit as well as provide an overview of individual
 component inside associated `README.md`. It is expected that the students will study
 the code and the git history before attending the workshop.
+
+## A Note on Security
+
+Feel free to poke around as much as you would like. Anyone who finds and 
+reports a bug will be added to the repo's "Gratitude List" as a contributor.
+
+Please note that availability is not one of the security goals for this repo.
+Bugs that crash the server will not be considered relevant. Only bugs that 
+either leak or corrupt the database will be considered valid.
