@@ -47,7 +47,7 @@ to get the project up and running:
 docker compose up
 ```
 
-## A note to the maintainers
+## A Note to Maintainers
 
 Please have a descriptive git commit as well as provide an overview of individual
 component inside associated `README.md`. It is expected that the students will study
@@ -55,9 +55,26 @@ the code and the git history before attending the workshop.
 
 ## A Note on Security
 
-Feel free to poke around as much as you would like. Anyone who finds and 
+Feel free to poke around as much as you would like. Anyone who finds and
 reports a bug will be added to the repo's "Gratitude List" as a contributor.
 
 Please note that availability is not one of the security goals for this repo.
-Bugs that crash the server will not be considered relevant. Only bugs that 
+Bugs that crash the server will not be considered relevant. Only bugs that
 either leak or corrupt the database will be considered valid.
+
+## A Note to Students
+
+It is best to read this codebase in the following order:
+Keep in mind that this repo also has a linear history so you can
+follow the git history to see the progress for how the instructors setup and grew
+the repo
+
+- Homepage README
+- `db/README` has an ERD, this is the entrypoint
+- get the database up and running. Run sql files and play around a bit
+- consider the endpoints you might need. You will need some familiarity with
+[HTTP Protocol and its methods](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods)
+- `be/README` for the api designed for this application
+- `be/db.py` for the code to interact with the database
+- `be/app.py` for the web layer. You will need some familiarity with [JWT tokens](https://jwt.io). try running the application and interacting with it
+via curl/postman/thunderclient and related tools.
