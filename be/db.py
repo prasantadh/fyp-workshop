@@ -56,6 +56,32 @@ def delete_user(id):
     result = result.mappings().all()
     return {} if len(result) == 0 else result[0]
 
+def follow_user(follower, followed):
+    stmt = text("insert into follows(follower, followed) values (:follower, :followed) returning follower as id")
+    params = {'follower': follower, 'followed': followed}
+    result = run_query(stmt, params)
+    result = result.mappings().all()
+    return {} if len(result) == 0 else result[0]
+
+def unfollow_user(follower, followed):
+    stmt = text("delete from follows where follower=:follower and followed=:followed")
+    params = {'follower': follower, followed: 'followed'}
+    result = run_query(stmt, params)
+    result = result.mappings().all()
+    return {} if len(result) == 0 else result[0]
+
+def followed_users(current_user):
+    stmt = text("select id, username from users where id in (select followed from follows where follower=:current_user)")
+    params = {'current_user' : current_user}
+    result = run_query(stmt, params)
+    return result.mappings().all()
+
+def followers(current_user):
+    stmt = text("select id, username from users where id in (select follower from follows where followed=:current_user)")
+    params = {'current_user': current_user}
+    result = run_query(stmt, params)
+    return result.mappings().all()
+
 # FIXME while we use seed.sql to populate data and test
 # each test case should create its own data and cleanup afterwards
 # this is because unittests can run in any order
@@ -65,7 +91,6 @@ class TestDbFunctions(unittest.TestCase):
         self.assertEqual(get_user(100), {}, "Should not return user")
 
     def test_get_users_works(self):
-        self.assertEqual(True, True)
         self.assertTrue({'id': 1, 'username': 'user1'} in get_users())
         self.assertTrue({'id': 2, 'username': 'user2'} in get_users())
         self.assertTrue({'id': 3, 'username': 'user3'} in get_users())
@@ -92,6 +117,28 @@ class TestDbFunctions(unittest.TestCase):
     def test_delete_user_works(self):
         result = create_user('user6', 'password6')
         self.assertEqual(delete_user(result['id']), result)
+
+    def test_follow_user_works(self):
+        result = follow_user(3, 4);
+        self.assertEqual(result, {'id': 3});
+        # TODO can extend the test to see 4 is now in 3s followers
+
+    def test_unfollow_user_works(self):
+        result = follow_user(2, 4);
+        self.assertEqual(result, {'id': 2})
+        # TODO can extend the test to see 4 is not in 2s followers
+
+    def test_followed_users_works(self):
+        result = followed_users(1)
+        self.assertTrue({'id': 3, 'username': 'user3'} in result)
+        self.assertTrue({'id': 4, 'username': 'user4'} in result)
+        self.assertTrue({'id': 2, 'username': 'user2'} not in result)
+
+    def test_followers_works(self):
+        result = followers(3)
+        self.assertTrue({'id': 1, 'username': 'user1'} in result)
+        self.assertTrue({'id': 2, 'username': 'user2'} in result)
+        self.assertTrue({'id': 3, 'username': 'user3'} not in result)
 
     
     # TODO should test create users but will do that later
