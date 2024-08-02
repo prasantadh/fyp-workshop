@@ -82,9 +82,49 @@ def followers(current_user):
     result = run_query(stmt, params)
     return result.mappings().all()
 
+def create_tweet(user_id, content):
+    stmt = text("insert into tweets(user_id, content, created_at) values (:user_id, :content, current_timestamp) returning id")
+    params = {'user_id': user_id, 'content': content}
+    result = run_query(stmt, params)
+    result = result.mappings().all()
+    return {} if len(result) == 0 else result[0]
+
+def get_tweet(id):
+    stmt = text("select * from tweets where id =:id")
+    params = {'id': id}
+    result = run_query(stmt, params)
+    result = result.mappings().all()
+    return {} if len(result) == 0 else result[0]
+
+def get_tweets(user_id):
+    stmt = text("select * from tweets where user_id=:user_id")
+    params = {'user_id': user_id }
+    result = run_query(stmt, params)
+    return result.mappings().all()
+
+def update_tweet(id, content):
+    stmt = text("update tweets set content=:content where id=:id returning id")
+    params = {'id': id, 'content': content}
+    result = run_query(stmt, params)
+    result = result.mappings().all()
+    return {} if len(result) == 0 else result[0]
+
+def delete_tweet(id):
+    stmt = text("delete from tweets where id=:id returning id")
+    params = {'id': id}
+    result = run_query(stmt, params)
+    result = result.mappings().all()
+    return {} if len(result) == 0 else result[0]
+
 # FIXME while we use seed.sql to populate data and test
 # each test case should create its own data and cleanup afterwards
 # this is because unittests can run in any order
+# 
+# It is also worth looking into 
+# https://stackoverflow.com/questions/5342440/reset-auto-increment-counter-in-postgres 
+# as they show how to reset counter.
+# in the test cases if we delete all data, we might need to also reset
+# counter to have predictable ids
 class TestDbFunctions(unittest.TestCase):
     def test_get_user_works(self):
         self.assertEqual(get_user(1), {'id': 1, 'username': 'user1'}, "Should be user with id 1")
@@ -140,9 +180,27 @@ class TestDbFunctions(unittest.TestCase):
         self.assertTrue({'id': 2, 'username': 'user2'} in result)
         self.assertTrue({'id': 3, 'username': 'user3'} not in result)
 
+    def test_create_tweet_works(self):
+        result = create_tweet(1, "hello there again!")
+        self.assertTrue('id' in result.keys())
+
+    def test_get_tweet_works(self):
+        result = get_tweet(1)
+        self.assertEqual(result['content'], 'I am user1')
+
+    def test_get_tweets_works(self):
+        result = get_tweets(1)
+        self.assertEqual(result[0].content, 'I am user1')
+        self.assertEqual(result[1].content, 'hello there again!')
+
+    def test_update_tweet_works(self):
+        result = update_tweet(1, 'I am updated user1')
+        self.assertEqual(get_tweet(1)['content'], 'I am updated user1' )
+
+    def test_delete_tweet_works(self):
+        result = create_tweet(1, 'only to be deleted')
+        self.assertEqual(delete_tweet(result['id']), result)
     
-    # TODO should test create users but will do that later
-    # as that impacts the state of database fixtures
 if __name__ == '__main__':
     unittest.main()
 
