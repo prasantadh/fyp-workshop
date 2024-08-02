@@ -1,4 +1,5 @@
 from flask import Flask
+from flask import request
 import db
 
 app = Flask(__name__)
@@ -14,6 +15,14 @@ def failure(reason):
         'status': 'failure',
         'data': reason
     }
+
+@app.put('/users')
+def put_users():
+    data = request.get_json()
+    if 'username' not in data or 'password' not in data:
+        return failure("missing username or password field")
+    result = db.create_user(data['username'], data['password'])
+    return success(dict(result))
 
 @app.get('/users/<id>')
 def get_users_id(id):
