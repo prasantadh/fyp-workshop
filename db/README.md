@@ -25,7 +25,8 @@ in the current folder.
 ```bash
 psql postgres -c "create database twitter";
 # to create the schema 
-psql twitter -f init.sql;
+psql twitter -f init.sql;exit
+
 # or to create the schema as well as seed the database
 psql twitter -f init.sql -f seed.sql
 ```
