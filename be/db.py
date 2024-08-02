@@ -1,5 +1,6 @@
 from sqlalchemy import create_engine
 from sqlalchemy.sql import text
+from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 
 import unittest
 
@@ -10,7 +11,7 @@ import unittest
 
 def run_query(stmt, params):
     # FIXME use environment variable for secrets
-    engine = create_engine("postgresql://bhakku@localhost:5432/twitter")
+    engine = create_engine("postgresql://postgres:postgres@localhost:5432/twitter")
     with engine.connect() as conn:
         result = conn.execute(stmt, params)
         return result
@@ -18,8 +19,22 @@ def run_query(stmt, params):
 def create_user(username, password):
     stmt = text("insert into users(username, password) values (:username, crypt(:password, gen_salt('bf'))) returning id")
     params = {"username": username, "password": password}
-    result = run_query(stmt, params)
-    return result.mappings().all()[0]
+    try:
+        result = run_query(stmt, params)
+        return result.mappings().all()[0]
+    except IntegrityError as e:
+        if 'unique' in str(e.orig):
+            print({"error": "Username already exists"})
+            return {}
+        else:
+            print({"error": str(e.orig)})
+            return {}
+    except SQLAlchemyError as e:
+        print({"error": "An error occurred while creating the user"})
+        return {}
+    except Exception as e:
+        print({"error":"An unexpected error occurred"})
+        return {}
 
 def get_user(id):
     stmt = text("select id, username from users where id=:id")
@@ -81,21 +96,28 @@ class TestDbFunctions(unittest.TestCase):
         self.assertEqual(login_user('user2', '2password'), {'id': 2, 'match': True})
 
     def test_create_user_works(self):
-        self.assertEqual(create_user('user5', 'password5'), {'id': 5})
-        # FIXME we haven't looked into what happens in failing
-        # conditions. for example, what if we try to create the user
-        # with already existing username? Currently, this crashes
-        # the program. We are expected to handle this with a 
-        # try...except block.
-        # self.assertEqual(create_user('user5', 'password5'), {'id': 5})
+        # creating a new user test
+        test_user = create_user('user5', 'password5')
+        print(test_user)
+        self.assertEqual(test_user, {'id': 5})
+        # testing for duplicate users
+        duplicate_test = create_user('user4', 'password4')
+        print(duplicate_test)
+        self.assertEqual(duplicate_test, {})
+
+#         # FIXME we haven't looked into what happens in failing
+#         # conditions. for example, what if we try to create the user
+#         # with already existing username? Currently, this crashes
+#         # the program. We are expected to handle this with a 
+#         # try...except block.
+#         # self.assertEqual(create_user('user5', 'password5'), {'id': 5})
     
     def test_delete_user_works(self):
         result = create_user('user6', 'password6')
         self.assertEqual(delete_user(result['id']), result)
 
     
-    # TODO should test create users but will do that later
-    # as that impacts the state of database fixtures
+#     # TODO should test create users but will do that later
+#      # as that impacts the state of database fixtures
 if __name__ == '__main__':
     unittest.main()
-
