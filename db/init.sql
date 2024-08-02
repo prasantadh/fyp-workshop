@@ -14,6 +14,7 @@ CREATE table follows (
   PRIMARY KEY (followed, follower),
   FOREIGN KEY (followed) REFERENCES users(ID) ON DELETE CASCADE,
   FOREIGN KEY (follower) REFERENCES users(ID) ON DELETE CASCADE
+  -- add a contraint that a user cannot follow themselves
 );
 
 CREATE table tweets (
