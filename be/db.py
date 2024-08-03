@@ -37,10 +37,7 @@ def create_user(username, password):
     )
     params = {"username": username, "password": password}
 
-    try:
-        result = run_query(stmt, params)
-    except:
-        raise
+    result = run_query(stmt, params)
 
     return result.mappings().all()[0]
 
