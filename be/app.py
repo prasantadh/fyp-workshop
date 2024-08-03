@@ -96,6 +96,51 @@ def create_app():
         result = db.unfollow_user(current_user_id, id)
         return success(dict(result))
 
+    @app.put("/tweets")
+    @jwt_required()
+    def create_tweet():
+        current_user_id = get_jwt_identity()
+        data = request.get_json()
+        if "content" not in data:
+            return failure('missing "content" field')
+        result = db.create_tweet(current_user_id, data["content"])
+        return success(dict(result))
+
+    @app.get("/tweets/<id>")
+    def get_tweet(id):
+        # FIXME id can be anything and this will crash
+        # Have a try...except block to return failure
+        # Same goes for get_tweets
+        result = db.get_tweet(id)
+        return success(dict(result))
+
+    @app.get("/users/<id>/tweets")
+    def get_tweets(id):
+        result = db.get_tweets(id)
+        result = [dict(v) for v in result]
+        return success(result)
+
+    @app.patch("/tweets/<id>")
+    @jwt_required()
+    def update_tweet(id):
+        current_user_id = get_jwt_identity()
+        # FIXME validate the current_user_id is tweet.user_id
+        # otherwise any authenticated user can edit any tweet
+        data = request.get_json()
+        if "content" not in data:
+            return failure('missing "content" field')
+        result = db.update_tweet(current_user_id, data["content"])
+        return success(dict(result))
+
+    @app.delete("/tweets/<id>")
+    @jwt_required()
+    def delete_tweet(id):
+        current_user_id = get_jwt_identity()
+        # FIXME validate the current_user_id is tweet.user_id
+        # otherwise any authenticated user can delete any tweet
+        result = db.delete_tweet(id)
+        return success(dict(result))
+
     return app
 
 

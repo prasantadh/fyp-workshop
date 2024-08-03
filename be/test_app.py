@@ -1,6 +1,7 @@
+from sqlalchemy.sql.sqltypes import json
 from werkzeug.wrappers import response
 from app import create_app
-from db import reset, create_user, follow_user
+from db import reset, create_user, follow_user, create_tweet
 
 import pytest
 
@@ -123,3 +124,57 @@ def test_get_followers_works(client, token):
         "status": "success",
         "data": [{"id": 2, "username": "user2"}, {"id": 3, "username": "user3"}],
     }
+
+
+def test_put_tweet_works(client, token):
+    response = client.put(
+        "/tweets",
+        headers={"Authorization": "Bearer {}".format(token)},
+        json={"content": "hello world for my first tweet"},
+    ).get_json()
+    assert response == {"status": "success", "data": {"id": 1}}
+    # TODO send a request without content field and see
+    # TODO also send a request with content field with 0 chars
+    # and see
+
+
+def test_get_tweet_works(client):
+    reset()
+    create_user("user1", "username1")
+    create_tweet(1, "hello world")
+    response = client.get("/tweets/1").get_json()
+    assert response["data"]["content"] == "hello world"
+
+
+def test_get_tweets_works(client, token):
+    reset()
+    create_user("user1", "username1")
+    create_tweet(1, "hello world")
+    create_tweet(1, "foo bar")
+
+    response = client.get("/users/1/tweets").get_json()
+    assert response["data"][0]["content"] == "hello world"
+    assert response["data"][1]["content"] == "foo bar"
+
+
+def test_update_tweets_works(client, token):
+    create_tweet(1, "hello world")
+
+    response = client.patch(
+        "/tweets/1",
+        headers={"Authorization": "Bearer {}".format(token)},
+        json={"content": "foo bar"},
+    )
+    response = client.get("/tweets/1").get_json()
+    assert response["data"]["content"] == "foo bar"
+
+
+def test_delete_tweet_works(client, token):
+    create_tweet(1, "hello world")
+
+    response = client.delete(
+        "/tweets/1", headers={"Authorization": "Bearer {}".format(token)}
+    ).get_json()
+    assert response == {"status": "success", "data": {"id": 1}}
+    response = client.get("/tweets/1").get_json()
+    assert response == {"status": "success", "data": {}}
