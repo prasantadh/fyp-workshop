@@ -91,7 +91,7 @@ def delete_user(id):
 
 def follow_user(follower, followed):
     stmt = text(
-        "insert into follows(follower, followed) values (:follower, :followed) returning follower as id"
+        "insert into follows(follower, followed) values (:follower, :followed) returning followed"
     )
     params = {"follower": follower, "followed": followed}
     result = run_query(stmt, params)
@@ -101,7 +101,7 @@ def follow_user(follower, followed):
 
 def unfollow_user(follower, followed):
     stmt = text(
-        "delete from follows where follower=:follower and followed=:followed returning follower"
+        "delete from follows where follower=:follower and followed=:followed returning followed"
     )
     params = {"follower": follower, "followed": followed}
     result = run_query(stmt, params)
@@ -235,7 +235,7 @@ class TestDbFunctions(unittest.TestCase):
         create_user("user1", "password1")
         create_user("user2", "password2")
         result = follow_user(1, 2)
-        self.assertEqual(result, {"id": 1})
+        self.assertEqual(result, {"followed": 2})
         with self.assertRaises(Exception):
             follow_user(1, 3)
         with self.assertRaises(Exception):
@@ -247,7 +247,7 @@ class TestDbFunctions(unittest.TestCase):
         create_user("user2", "password2")
         self.assertEqual(unfollow_user(1, 2), {})
         follow_user(1, 2)
-        self.assertEqual(unfollow_user(1, 2), {"follower": 1})
+        self.assertEqual(unfollow_user(1, 2), {"followed": 2})
 
     def test_followed_users_works(self):
         reset()

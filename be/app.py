@@ -42,7 +42,7 @@ def create_app():
         result = [dict(v) for v in result]
         return success(result)
 
-    @app.post("/login")
+    @app.post("/users")
     def login_user():
         data = request.get_json()
         if "username" not in data or "password" not in data:
@@ -68,12 +68,9 @@ def create_app():
 
     @app.put("/follows/<id>")
     @jwt_required()
-    def follow_user():
+    def follow_user(id):
         current_user_id = get_jwt_identity()
-        data = request.get_json()
-        if "id" not in data:
-            return failure('"id" parameter is required')
-        result = db.follow_user(current_user_id, data["id"])
+        result = db.follow_user(current_user_id, id)
         return success(dict(result))
 
     @app.get("/follows")
