@@ -3,20 +3,21 @@ from sqlalchemy.sql import text
 
 import unittest
 
-# FIXME it seems psychopg2 needs to be installed
-# for docker to be able to access postgresql
-# will also need CREATE EXTENSION pgcrypto
-# Picked SQL Alchemy because it also supports ORM if needed
+# # FIXME it seems psychopg2 needs to be installed
+# # for docker to be able to access postgresql
+# # will also need CREATE EXTENSION pgcrypto
+# # Picked SQL Alchemy because it also supports ORM if needed
 
-# FIXME add function hints on documentation
+# # FIXME add function hints on documentation
 
 
 def run_query(stmt, params):
     # FIXME use environment variable for secrets
     try:
-        engine = create_engine("postgresql://bhakku@localhost:5432/twitter")
+        engine = create_engine("postgresql://postgres:postgres@localhost:5432/twitter")
         with engine.connect() as conn:
             result = conn.execute(stmt, params)
+            conn.commit()
             conn.close()
             return result
     except:
@@ -24,12 +25,11 @@ def run_query(stmt, params):
 
 
 def reset():
-    with open("../db/init.sql") as file:
+    with open("..\\db\\init.sql") as file:
         stmt = text(file.read())
         # if this fails, it is okay to crash, we don't want a try..except
         run_query(stmt, {})
     return
-
 
 def create_user(username, password):
     stmt = text(
@@ -70,15 +70,15 @@ def login_user(username, password):
     result = result.mappings().all()
     return {} if len(result) == 0 else result[0]
 
+result = login_user('user1', 'password1')
 
 def change_password(id, password):
     stmt = text(
-        "update users set password=crypt(:password, gen_salt('bf')) where id=:id returning id"
+        "UPDATE users SET password=crypt(:password, gen_salt('bf')) WHERE id=:id RETURNING id"
     )
     params = {"id": id, "password": password}
-    result = run_query(stmt, params)
-    result = result.mappings().all()
-    return {} if len(result) == 0 else result[0]
+    result = run_query(stmt, params)  # Execute the query with the provided statement and parameters
+    return result.mappings().all()[0]
 
 
 def delete_user(id):
@@ -168,19 +168,19 @@ def delete_tweet(id):
     return {} if len(result) == 0 else result[0]
 
 
-# FIXME while we use seed.sql to populate data and test
-# each test case should create its own data and cleanup afterwards
-# this is because unittests can run in any order
-#
-# It is also worth looking into
-# https://stackoverflow.com/questions/5342440/reset-auto-increment-counter-in-postgres
-# as they show how to reset counter.
-# in the test cases if we delete all data, we might need to also reset
-# counter to have predictable ids
+# # FIXME while we use seed.sql to populate data and test
+# # each test case should create its own data and cleanup afterwards
+# # this is because unittests can run in any order
+# #
+# # It is also worth looking into
+# # https://stackoverflow.com/questions/5342440/reset-auto-increment-counter-in-postgres
+# # as they show how to reset counter.
+# # in the test cases if we delete all data, we might need to also reset
+# # counter to have predictable ids
 class TestDbFunctions(unittest.TestCase):
     def test_reset_db_works(self):
         reset()
-
+        
     def test_create_user_works(self):
         reset()
         self.assertEqual(create_user("user1", "password1"), {"id": 1})

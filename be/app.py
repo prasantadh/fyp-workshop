@@ -30,6 +30,7 @@ def create_app():
         except:
             return failure("something went wrong")
         return success(dict(result))
+        
 
     @app.get("/users/<id>")
     def get_users_id(id):
@@ -56,7 +57,7 @@ def create_app():
             return failure(
                 "incorrect username or password"
             )  # even though we know password did not match
-        token = create_access_token(identity=result["id"])
+        token = create_access_token(identity = result["id"])
         return success(token)
 
     @app.delete("/users")
