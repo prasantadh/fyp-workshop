@@ -21,27 +21,36 @@ def create_app():
         return {"status": "failure", "data": reason}
 
     @app.put("/users")
+    #issue: register a user with empty username and password (solved)
     def put_users():
         data = request.get_json()
-        if "username" not in data or "password" not in data:
+        if "username" not in data or not data["username"].strip() or "password" not in data or not data["password"].strip():
             return failure("missing username or password field")
         try:
             result = db.create_user(data["username"], data["password"])
         except:
             return failure("something went wrong")
-        return success(dict(result))
-        
+        return success(dict(result))      
+    
 
     @app.get("/users/<id>")
+    #issue: gives success message even if the user is not registered (solved)
     def get_users_id(id):
         result = db.get_user(id)
-        return success(dict(result))
+        if len(result) == 0:
+            return failure("user not found")  
+        else:
+            return success(dict(result))
 
     @app.get("/users")
+    #issue: success message even if there are no users (solved)
     def get_users():
         result = db.get_users()
-        result = [dict(v) for v in result]
-        return success(result)
+        if len(result) == 0:
+            return failure("users not registered")
+        else:
+            result = [dict(v) for v in result]
+            return success(result)
 
     @app.post("/users")
     def login_user():
@@ -69,6 +78,7 @@ def create_app():
 
     @app.put("/follows/<id>")
     @jwt_required()
+    #issue: tried to follow non-existing user
     def follow_user(id):
         current_user_id = get_jwt_identity()
         result = db.follow_user(current_user_id, id)
