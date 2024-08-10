@@ -14,6 +14,7 @@ CREATE table follows (
   PRIMARY KEY (followed, follower),
   FOREIGN KEY (followed) REFERENCES users(ID) ON DELETE CASCADE,
   FOREIGN KEY (follower) REFERENCES users(ID) ON DELETE CASCADE
+  -- add a contraint that a user cannot follow themselves
 );
 
 CREATE table tweets (
@@ -24,6 +25,7 @@ CREATE table tweets (
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
+ALTER TABLE follows ADD CONSTRAINT no_self_follow CHECK (followed<>follower);
 -- in the future if you need to change the schema,
 -- you will need to use a bunch of alter table statements
 -- at which point, using a database migrations manager
