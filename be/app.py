@@ -109,10 +109,11 @@ def create_app():
 
     @app.put("/tweets")
     @jwt_required()
+    #issue: can put empty tweets (solved)
     def create_tweet():
         current_user_id = get_jwt_identity()
         data = request.get_json()
-        if "content" not in data:
+        if "content" not in data or not data["content"].strip():
             return failure('missing "content" field')
         result = db.create_tweet(current_user_id, data["content"])
         return success(dict(result))
