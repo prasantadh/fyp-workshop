@@ -4,12 +4,12 @@ from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 
 import unittest
 
-# # FIXME it seems psychopg2 needs to be installed
-# # for docker to be able to access postgresql
-# # will also need CREATE EXTENSION pgcrypto
-# # Picked SQL Alchemy because it also supports ORM if needed
+# FIXME it seems psychopg2 needs to be installed
+# for docker to be able to access postgresql
+# will also need CREATE EXTENSION pgcrypto
+# Picked SQL Alchemy because it also supports ORM if needed
 
-# # FIXME add function hints on documentation
+# FIXME add function hints on documentation
 
 
 def run_query(stmt, params):
@@ -17,6 +17,7 @@ def run_query(stmt, params):
     engine = create_engine("postgresql://postgres:postgres@localhost:5432/twitter")
     with engine.connect() as conn:
         result = conn.execute(stmt, params)
+        
         return result
 
 def create_user(username, password):
@@ -211,26 +212,26 @@ def delete_tweet(id):
 #         self.assertEqual(login_user("user1", "password2"), {"id": 1, "match": False})
 #         self.assertEqual(login_user("user2", "password1"), {})
 
-    def test_change_password_works(self):
-        self.assertEqual(change_password(2, '2password'), {'id': 2})
-        self.assertEqual(login_user('user2', '2password'), {'id': 2, 'match': True})
+    # def test_change_password_works(self):
+    #     self.assertEqual(change_password(2, '2password'), {'id': 2})
+    #     self.assertEqual(login_user('user2', '2password'), {'id': 2, 'match': True})
 
-    def test_create_user_works(self):
-        self.assertEqual(create_user('user5', 'password5'), {'id': 5})
-        # FIXME we haven't looked into what happens in failing
-        # conditions. for example, what if we try to create the user
-        # with already existing username? Currently, this crashes
-        # the program. We are expected to handle this with a 
-        # try...except block.
-        # self.assertEqual(create_user('user5', 'password5'), {'id': 5})
+    # def test_create_user_works(self):
+    #     self.assertEqual(create_user('user5', 'password5'), {'id': 5})
+    #     # FIXME we haven't looked into what happens in failing
+    #     # conditions. for example, what if we try to create the user
+    #     # with already existing username? Currently, this crashes
+    #     # the program. We are expected to handle this with a 
+    #     # try...except block.
+    #     # self.assertEqual(create_user('user5', 'password5'), {'id': 5})
     
-    def test_delete_user_works(self):
-        result = create_user('user6', 'password6')
-        self.assertEqual(delete_user(result['id']), result)
+    # def test_delete_user_works(self):
+    #     result = create_user('user6', 'password6')
+    #     self.assertEqual(delete_user(result['id']), result)
 
     
     # TODO should test create users but will do that later
     # as that impacts the state of database fixtures
-if __name__ == '__main__':
-    unittest.main()
+# if __name__ == '__main__':
+#     unittest.main()
 

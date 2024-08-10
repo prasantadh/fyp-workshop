@@ -139,7 +139,7 @@ def create_app():
         # FIXME validate the current_user_id is tweet.user_id
         # otherwise any authenticated user can edit any tweet
         data = request.get_json()
-        if "content" not in data:
+        if "content" not in data or not data["content"].strip():
             return failure('missing "content" field')
         result = db.update_tweet(current_user_id, data["content"])
         return success(dict(result))
