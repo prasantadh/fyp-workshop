@@ -140,19 +140,22 @@ def create_app():
     @jwt_required()
     def update_tweet(id):
         current_user_id = get_jwt_identity()
-        # FIXME validate the current_user_id is tweet.user_id
-        # otherwise any authenticated user can edit any tweet
+        # FIXME validate the current_user_id is tweet.user_id (done)
+        # otherwise any authenticated user can edit any tweet (done)
         data = request.get_json()
         if "content" not in data or not data["content"].strip():
             return failure('missing "content" field')
-        result = db.update_tweet(current_user_id, data["content"])
-        return success(dict(result))
+        result = db.update_tweet(current_user_id, id, data["content"])
+        if len(result) == 0:
+            return failure("cannot update from other account")
+        else:
+            return success(dict(result))
 
     @app.delete("/tweets/<id>")
     @jwt_required()
     def delete_tweet(id):
         current_user_id = get_jwt_identity()
-        # FIXME validate the current_user_id is tweet.user_id
+        # FIXME validate the current_user_id is tweet.user_id (done using query)
         # otherwise any authenticated user can delete any tweet (done)
         try:
             result = db.delete_tweet(current_user_id, id) 
