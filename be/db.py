@@ -17,7 +17,7 @@ import unittest
 load_dotenv()
 
 def run_query(stmt, params):
-    # FIXME use environment variable for secrets
+    # FIXME use environment variable for secrets (done)
     db_user = os.getenv("DB_USER")
     db_password = os.getenv("DB_PASSWORD")
     db_host = os.getenv("DB_HOST")
@@ -166,9 +166,9 @@ def get_tweets(user_id):
     return result.mappings().all()
 
 
-def update_tweet(id, content):
-    stmt = text("update tweets set content=:content where id=:id returning id")
-    params = {"id": id, "content": content}
+def update_tweet(logged_user, id, content):
+    stmt = text("update tweets set content=:content where id=:id and user_id=:logged_user returning id")
+    params = {"logged_user": logged_user, "id": id, "content": content}
     result = run_query(stmt, params)
     result = result.mappings().all()
     return {} if len(result) == 0 else result[0]
