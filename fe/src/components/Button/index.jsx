@@ -12,10 +12,14 @@ const CustomButton = ({
   isRounded,
   disabled,
   text,
+  onClick,
+  style,
 }) => {
   return (
     <button
+      onClick={onClick}
       className={`button ${buttonType} ${isRounded ? "rounded" : ""}`}
+      style={style}
       disabled={disabled}
     >
       {text ?? "default"}

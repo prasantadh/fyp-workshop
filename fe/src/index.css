@@ -15,7 +15,7 @@ code {
 
 :root {
   /* Color styles */
-  --primary: #1486d2;
+  --primary: rgb(20, 134, 210);
   --secondary: #841be0;
 
   --gradient: linear-gradient(109.079deg, #1486d2 0%, #841be0 100%);
