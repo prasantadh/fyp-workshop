@@ -120,8 +120,8 @@ def create_app():
 
     @app.get("/tweets/<id>")
     def get_tweet(id):
-        # FIXME id can be anything and this will crash
-        # Have a try...except block to return failure
+        # FIXME id can be anything and this will crash (done)
+        # Have a try...except block to return failure 
         # Same goes for get_tweets
         result = db.get_tweet(id)
         if len(result) == 0:
@@ -140,7 +140,7 @@ def create_app():
     @jwt_required()
     def update_tweet(id):
         current_user_id = get_jwt_identity()
-        # FIXME validate the current_user_id is tweet.user_id (done)
+        # FIXME validate the current_user_id is tweet.user_id (done using query)
         # otherwise any authenticated user can edit any tweet (done)
         data = request.get_json()
         if "content" not in data or not data["content"].strip():
