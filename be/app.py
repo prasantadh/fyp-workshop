@@ -124,11 +124,15 @@ def create_app():
         # Have a try...except block to return failure
         # Same goes for get_tweets
         result = db.get_tweet(id)
+        if len(result) == 0:
+            return failure("tweet not found")
         return success(dict(result))
 
     @app.get("/users/<id>/tweets")
     def get_tweets(id):
         result = db.get_tweets(id)
+        if len(result) == 0:
+            return failure("no tweets found")
         result = [dict(v) for v in result]
         return success(result)
 
@@ -149,9 +153,15 @@ def create_app():
     def delete_tweet(id):
         current_user_id = get_jwt_identity()
         # FIXME validate the current_user_id is tweet.user_id
-        # otherwise any authenticated user can delete any tweet
-        result = db.delete_tweet(id)
-        return success(dict(result))
+        # otherwise any authenticated user can delete any tweet (done)
+        try:
+            result = db.delete_tweet(current_user_id, id) 
+            if len(result) == 0:
+                return failure("cannot delete the tweet from other account")
+            else:
+                return success(dict(result))
+        except Exception as e:
+            return failure(f"Error: {str (e)}")
 
     return app
 

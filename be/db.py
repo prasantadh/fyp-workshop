@@ -1,20 +1,32 @@
+from dotenv import load_dotenv
+import os
+
 from sqlalchemy import create_engine
 from sqlalchemy.sql import text
 
 import unittest
 
-# # FIXME it seems psychopg2 needs to be installed
-# # for docker to be able to access postgresql
-# # will also need CREATE EXTENSION pgcrypto
-# # Picked SQL Alchemy because it also supports ORM if needed
+# FIXME it seems psychopg2 needs to be installed
+# for docker to be able to access postgresql
+# will also need CREATE EXTENSION pgcrypto
+# Picked SQL Alchemy because it also supports ORM if needed
 
-# # FIXME add function hints on documentation
+# FIXME add function hints on documentation
 
+# Load the environment variables from the .env file
+load_dotenv()
 
 def run_query(stmt, params):
     # FIXME use environment variable for secrets
+    db_user = os.getenv("DB_USER")
+    db_password = os.getenv("DB_PASSWORD")
+    db_host = os.getenv("DB_HOST")
+    db_port = os.getenv("DB_PORT")
+    db_name = os.getenv("DB_NAME")
+
+    db_url = f"postgresql://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}"
     try:
-        engine = create_engine("postgresql://postgres:postgres@localhost:5432/twitter")
+        engine = create_engine(db_url)
         with engine.connect() as conn:
             result = conn.execute(stmt, params)
             conn.commit()
@@ -58,10 +70,6 @@ def get_users():
     result = run_query(stmt, params)
     return result.mappings().all()
 
-test1 = get_users()
-print(test1)
-
-
 def login_user(username, password):
     # https://docs.vultr.com/how-to-securely-store-passwords-using-postgresql
     stmt = text(
@@ -72,7 +80,6 @@ def login_user(username, password):
     result = result.mappings().all()
     return {} if len(result) == 0 else result[0]
 
-result = login_user('user1', 'password1')
 
 def change_password(id, password):
     stmt = text(
@@ -167,23 +174,25 @@ def update_tweet(id, content):
     return {} if len(result) == 0 else result[0]
 
 
-def delete_tweet(id):
-    stmt = text("delete from tweets where id=:id returning id")
-    params = {"id": id}
+def delete_tweet(logged_user, id):
+    stmt = text("delete from tweets where id=:id and user_id=:logged_user returning id")
+    params = {"id": id, "logged_user": logged_user}
+    print("the logged user id", logged_user)
     result = run_query(stmt, params)
     result = result.mappings().all()
     return {} if len(result) == 0 else result[0]
 
 
-# # FIXME while we use seed.sql to populate data and test
-# # each test case should create its own data and cleanup afterwards
-# # this is because unittests can run in any order
-# #
-# # It is also worth looking into
-# # https://stackoverflow.com/questions/5342440/reset-auto-increment-counter-in-postgres
-# # as they show how to reset counter.
-# # in the test cases if we delete all data, we might need to also reset
-# # counter to have predictable ids
+# FIXME while we use seed.sql to populate data and test
+# each test case should create its own data and cleanup afterwards
+# this is because unittests can run in any order
+#
+# It is also worth looking into
+# https://stackoverflow.com/questions/5342440/reset-auto-increment-counter-in-postgres
+# as they show how to reset counter.
+# in the test cases if we delete all data, we might need to also reset
+# counter to have predictable ids
+
 # class TestDbFunctions(unittest.TestCase):
 #     def test_reset_db_works(self):
 #         reset()
