@@ -34,6 +34,28 @@
   border: 1px solid transparent;
 }
 
+.button-extra:hover {
+  background: linear-gradient(
+    to bottom right,
+    var(--primary),
+    var(--secondary)
+  );
+}
+
+.button-extra:active {
+  background: linear-gradient(
+    to bottom right,
+    var(--primary),
+    var(--secondary)
+  );
+  border: 1px solid var(--black-75);
+}
+
+.button-extra:disabled {
+  background: var(--gray);
+  border: 1px solid transparent;
+}
+
 .button-primary {
   background: var(--primary);
 }

@@ -4,16 +4,20 @@ import "./button.css";
 export const ButtonType = {
   PRIMARY: "button-primary",
   SECONDARY: "",
-  SECONDARY_GRADIENT: "button-gradient-secondary",
+  EXTRA: "button-extra",
 };
 
 const CustomButton = ({
   buttonType = ButtonType.SECONDARY_GRADIENT,
   isRounded,
+  disabled,
   text,
 }) => {
   return (
-    <button className={`button ${buttonType} ${isRounded ? "rounded" : ""}`}>
+    <button
+      className={`button ${buttonType} ${isRounded ? "rounded" : ""}`}
+      disabled={disabled}
+    >
       {text ?? "default"}
     </button>
   );
