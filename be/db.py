@@ -1,3 +1,6 @@
+from dotenv import load_dotenv
+import os
+
 from sqlalchemy import create_engine
 from sqlalchemy.sql import text
 
@@ -10,13 +13,23 @@ import unittest
 
 # FIXME add function hints on documentation
 
+# Load the environment variables from the .env file
+load_dotenv()
 
 def run_query(stmt, params):
-    # FIXME use environment variable for secrets
+    # FIXME use environment variable for secrets (done)
+    db_user = os.getenv("DB_USER")
+    db_password = os.getenv("DB_PASSWORD")
+    db_host = os.getenv("DB_HOST")
+    db_port = os.getenv("DB_PORT")
+    db_name = os.getenv("DB_NAME")
+
+    db_url = f"postgresql://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}"
     try:
-        engine = create_engine("postgresql://bhakku@localhost:5432/twitter")
+        engine = create_engine(db_url)
         with engine.connect() as conn:
             result = conn.execute(stmt, params)
+            conn.commit()
             conn.close()
             return result
     except:
@@ -24,7 +37,7 @@ def run_query(stmt, params):
 
 
 def reset():
-    with open("../db/init.sql") as file:
+    with open("..\\db\\init.sql") as file:
         stmt = text(file.read())
         # if this fails, it is okay to crash, we don't want a try..except
         run_query(stmt, {})
@@ -73,12 +86,11 @@ def login_user(username, password):
 
 def change_password(id, password):
     stmt = text(
-        "update users set password=crypt(:password, gen_salt('bf')) where id=:id returning id"
+        "UPDATE users SET password=crypt(:password, gen_salt('bf')) WHERE id=:id RETURNING id"
     )
     params = {"id": id, "password": password}
-    result = run_query(stmt, params)
-    result = result.mappings().all()
-    return {} if len(result) == 0 else result[0]
+    result = run_query(stmt, params)  # Execute the query with the provided statement and parameters
+    return result.mappings().all()[0]
 
 
 def delete_user(id):
@@ -90,14 +102,18 @@ def delete_user(id):
 
 
 def follow_user(follower, followed):
+    # logged in user is the follower
+    # should return the id of the followed user
     stmt = text(
-        "insert into follows(follower, followed) values (:follower, :followed) returning followed"
+        "insert into follows(followed, follower) values (:followed, :follower) returning followed"
     )
     params = {"follower": follower, "followed": followed}
-    result = run_query(stmt, params)
-    result = result.mappings().all()
-    return {} if len(result) == 0 else result[0]
-
+    try:
+        result = run_query(stmt, params)
+        result = result.mappings().all()
+        return {} if len(result) == 0 else result[0]
+    except:
+        raise
 
 def unfollow_user(follower, followed):
     stmt = text(
@@ -151,18 +167,17 @@ def get_tweets(user_id):
     result = run_query(stmt, params)
     return result.mappings().all()
 
-
-def update_tweet(id, content):
-    stmt = text("update tweets set content=:content where id=:id returning id")
-    params = {"id": id, "content": content}
+def update_tweet(logged_user, id, content):
+    stmt = text("update tweets set content=:content where id=:id and user_id=:logged_user returning id")
+    params = {"logged_user": logged_user, "id": id, "content": content}
     result = run_query(stmt, params)
     result = result.mappings().all()
     return {} if len(result) == 0 else result[0]
 
-
-def delete_tweet(id):
-    stmt = text("delete from tweets where id=:id returning id")
-    params = {"id": id}
+def delete_tweet(logged_user, id):
+    stmt = text("delete from tweets where id=:id and user_id=:logged_user returning id")
+    params = {"id": id, "logged_user": logged_user}
+    print("the logged user id", logged_user)
     result = run_query(stmt, params)
     result = result.mappings().all()
     return {} if len(result) == 0 else result[0]
@@ -177,10 +192,11 @@ def delete_tweet(id):
 # as they show how to reset counter.
 # in the test cases if we delete all data, we might need to also reset
 # counter to have predictable ids
+
 class TestDbFunctions(unittest.TestCase):
     def test_reset_db_works(self):
         reset()
-
+        
     def test_create_user_works(self):
         reset()
         self.assertEqual(create_user("user1", "password1"), {"id": 1})

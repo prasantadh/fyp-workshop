@@ -26,6 +26,10 @@ in the current folder.
 psql postgres -c "create database twitter";
 # to create the schema 
 psql twitter -f init.sql;
+
 # or to create the schema as well as seed the database
 psql twitter -f init.sql -f seed.sql
+
+# need to use this if the user needs to be specified while connecting to database
+psql -U postgres -d twitter -f init.sql -f seed.sql
 ```

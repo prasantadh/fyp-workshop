@@ -1,0 +1,70 @@
+/* NavBar.css */
+.navbar {
+  display: flex;
+  margin: auto;
+  /* background-color: #f04bff; */
+  background: linear-gradient(red, yellow);
+  gap: 277px;
+  height: 128px;
+  width: auto;
+}
+
+.logo {
+  margin-top: 38px;
+  margin-left: 40px;
+  align-items: center;
+}
+
+.logo h1 {
+  width: 60px;
+  height: 50px;
+  font-size: var(--title);
+  color: var(--black);
+  font-weight: bold;
+}
+
+.nav-content {
+  display: flex;
+  flex-direction: column; /* Stack title and buttons vertically */
+  align-items: center; /* Center align items horizontally */
+  height: 128px;
+  width: 672px;
+  padding-left: 32px;
+  padding-right: 32px;
+}
+
+.nav-title {
+  font-size: 18px;
+  font-weight: bold;
+  width: 672px;
+  height: 64px;
+  text-align: center;
+  justify-content: center;
+  line-height: 36px;
+  letter-spacing: 2px;
+}
+
+.nav-buttons {
+  display: flex;
+  align-items: center; /* Center-align the icons vertically */
+  gap: 72px;
+  height: 64px;
+  width: 672px;
+  justify-content: center;
+}
+
+.nav-button {
+  color: #333;
+  font-size: 20px;
+  text-decoration: none;
+  display: flex;
+  align-items: center; /* Center-align the icons vertically */
+  justify-content: center; /* Center-align the icons horizontally */
+  height: 64px;
+  width: 64px;
+}
+
+.nav-button:hover {
+  background-color: var(--black-10); /* Change color on hover */
+  border-radius: 8px;
+}
