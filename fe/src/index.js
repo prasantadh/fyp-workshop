@@ -5,6 +5,8 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { FaFigma } from "react-icons/fa";
 import SignInPage from "./pages/SignInPage";
+import { Toaster, resolveValue } from "react-hot-toast";
+import RegisterPage from "./pages/RegisterPage";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -24,7 +26,14 @@ root.render(
     >
       <FaFigma color="white" />
     </a>
-    <SignInPage />
+    <Toaster
+      position="bottom-right"
+      reverseOrder={false}
+      gutter={8}
+      containerClassName=""
+    />
+    {/* <SignInPage /> */}
+    <RegisterPage />
     {/* <App /> */}
   </React.StrictMode>
 );

@@ -1,35 +1,13 @@
-/* --primary: #1486D2;
---secondary: #841BE0;
-
---gradient: linear-gradient(109.079deg, #1486D2 0%, #841BE0 100%);
-
---black-75: rgba(0, 29, 31, 0.75);
---black-50: rgba(0, 29, 31, 0.5);
---black-25: rgba(0, 29, 31, 0.25);
---black-10: rgba(0, 29, 31, 0.10000000149011612);
---black-5: rgba(0, 29, 31, 0.05000000074505806);
-
---success: #1FBF43;
---error: #E64034; 
-
-
---title: 24px;
---subtitle: 22px;
---text: 16px;
---subtext: 12px;
-
-*/
-
 .button {
-  background: red;
   width: 100%;
   border: none;
   background: var(--secondary);
   color: white;
-  padding: 0.5rem 1.5rem;
+  padding: 0.8rem 1.5rem;
   border-radius: 8px;
   margin-left: 4px;
   font-size: var(--text);
+  font-weight: 600;
   cursor: pointer;
   border: 1px solid transparent;
 }

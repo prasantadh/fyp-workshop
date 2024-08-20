@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import CustomButton, { ButtonType } from "../../components/Button";
-import "./SignInPage.css";
+import "./RegisterPage.css";
 import CustomInput from "../../components/Input";
 import { guestInstance } from "../../utils/axios";
 import toast from "react-hot-toast";
 
-const SignInComponent = () => {
+const RegisterComponent = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -24,8 +24,13 @@ const SignInComponent = () => {
   };
 
   const onHandelSubmit = () => {
+    if (password.trim().length < 8) {
+      toast.error("Password needs to be greater than 8 in length");
+      return;
+    }
+
     guestInstance
-      .post("/users", {
+      .put("/users", {
         username,
         password,
       })
@@ -37,7 +42,6 @@ const SignInComponent = () => {
             setIncorrectData(response.data.data);
           } else {
             toast.success(response.data.status);
-            document.cookie = "tokenFromServer=" + response.data.data;
           }
         } else {
           toast.error("Something Went Wrong.");
@@ -56,16 +60,16 @@ const SignInComponent = () => {
         <div className="left-container">
           <div className="left-button-container">
             <h2>
-              Hey There! <br />
-              Good to see you ...
+              Start Your Journey! <br />
+              Get Started now!
             </h2>
 
-            <p>Don't have an account?</p>
+            <p>Already have an account?</p>
             <div className="button-wrapper">
               <CustomButton
                 className="test"
                 isRounded
-                text={"Sign Up"}
+                text={"Sign In"}
                 buttonType={ButtonType.SECONDARY}
               />
             </div>
@@ -92,7 +96,12 @@ const SignInComponent = () => {
             </p>
           )}
 
-          <div className="label-container">
+          <div
+            className="label-container"
+            style={{
+              marginTop: "20px",
+            }}
+          >
             <label htmlFor="password">Password: </label>
             <CustomInput
               hint={"Enter your password"}
@@ -114,7 +123,7 @@ const SignInComponent = () => {
 
           <div className="button-wrapper">
             <CustomButton
-              text={"Login"}
+              text={"Sign Up"}
               buttonType={ButtonType.PRIMARY}
               isRounded
               onClick={onHandelSubmit}
@@ -126,12 +135,12 @@ const SignInComponent = () => {
   );
 };
 
-const SignInPage = () => {
+const RegisterPage = () => {
   return (
     <>
-      <SignInComponent />
+      <RegisterComponent />
     </>
   );
 };
 
-export default SignInPage;
+export default RegisterPage;
