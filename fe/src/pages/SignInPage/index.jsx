@@ -38,6 +38,7 @@ const SignInComponent = () => {
           } else {
             toast.success(response.data.status);
             document.cookie = "tokenFromServer=" + response.data.data;
+            window.location.reload();
           }
         } else {
           toast.error("Something Went Wrong.");
