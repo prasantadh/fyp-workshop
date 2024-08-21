@@ -1,0 +1,48 @@
+<html>
+<head>
+    <script src="jquery.js"></script>
+    <link href="styles.css" rel="stylesheet" />
+</head>
+  <body>
+    <div class="container min-h-screen flex flex-col md:flex-row">
+
+      <div class="hidden md:block w-1/2 bg-gradient-to-br from-blue-500 to-purple-700 px-20">
+          <div class="h-[10%]"></div>
+          <div class="text-gray-50 text-5xl font-bold">FYP</div>
+          <div class="h-[10%]"></div>
+          <div class="text-gray-50 text-5xl font-bold">Hey There!</div>
+          <div class="h-[2%]"></div>
+          <div class="text-gray-50 text-5xl font-bold">Good to see you...</div>
+          <div class="h-[30%]"></div>
+          <div class="text-gray-50 text-lg">Don't have an account?</div>
+          <div class="h-[2%]"></div>
+          <div class="container">
+            <button type="" class="bg-purple-700 text-gray-50 w-64 rounded-full text-xl py-3"> Sign Up</button>
+          </div>
+      </div>
+
+      <div class="container w-full md:w-1/2 grid place-content-center">
+        <div class="form">
+          <form>
+            <div class="py-1">
+              <label for="username" class="font-bold">USERNAME</label>
+            </div>
+            <div>
+              <input type="text" id="username" name="username" class="border border-gray-400 rounded-full py-2 px-4 w-64" autofocus="true"/>
+            </div>
+            <div class="py-1">
+              <label for="password" class="font-bold">PASSWORD</label>
+            </div>
+            <div class="grid place-content-center">
+              <input type="password" id="password" name="password" class="border border-gray-400 rounded-full py-2 px-4 w-64"/>
+            </div>
+            <div class="py-3 grid place-content-center">
+              <input type="submit" class="w-32 bg-blue-600 py-2 rounded-full text-gray-50" value="Log In" />
+            </div>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </body>
+</html>
