@@ -16,6 +16,7 @@ import unittest
 # Load the environment variables from the .env file
 load_dotenv()
 
+
 def run_query(stmt, params):
     # FIXME use environment variable for secrets (done)
     db_user = os.getenv("DB_USER")
@@ -29,7 +30,7 @@ def run_query(stmt, params):
         engine = create_engine(db_url)
         with engine.connect() as conn:
             result = conn.execute(stmt, params)
-            conn.commit()
+            # conn.commit()
             conn.close()
             return result
     except:
@@ -37,7 +38,7 @@ def run_query(stmt, params):
 
 
 def reset():
-    with open("..\\db\\init.sql") as file:
+    with open("db/init.sql") as file:
         stmt = text(file.read())
         # if this fails, it is okay to crash, we don't want a try..except
         run_query(stmt, {})
@@ -89,7 +90,9 @@ def change_password(id, password):
         "UPDATE users SET password=crypt(:password, gen_salt('bf')) WHERE id=:id RETURNING id"
     )
     params = {"id": id, "password": password}
-    result = run_query(stmt, params)  # Execute the query with the provided statement and parameters
+    result = run_query(
+        stmt, params
+    )  # Execute the query with the provided statement and parameters
     return result.mappings().all()[0]
 
 
@@ -114,6 +117,7 @@ def follow_user(follower, followed):
         return {} if len(result) == 0 else result[0]
     except:
         raise
+
 
 def unfollow_user(follower, followed):
     stmt = text(
@@ -167,17 +171,20 @@ def get_tweets(user_id):
     result = run_query(stmt, params)
     return result.mappings().all()
 
+
 def update_tweet(logged_user, id, content):
-    stmt = text("update tweets set content=:content where id=:id and user_id=:logged_user returning id")
+    stmt = text(
+        "update tweets set content=:content where id=:id and user_id=:logged_user returning id"
+    )
     params = {"logged_user": logged_user, "id": id, "content": content}
     result = run_query(stmt, params)
     result = result.mappings().all()
     return {} if len(result) == 0 else result[0]
 
+
 def delete_tweet(logged_user, id):
     stmt = text("delete from tweets where id=:id and user_id=:logged_user returning id")
     params = {"id": id, "logged_user": logged_user}
-    print("the logged user id", logged_user)
     result = run_query(stmt, params)
     result = result.mappings().all()
     return {} if len(result) == 0 else result[0]
@@ -193,10 +200,11 @@ def delete_tweet(logged_user, id):
 # in the test cases if we delete all data, we might need to also reset
 # counter to have predictable ids
 
+
 class TestDbFunctions(unittest.TestCase):
     def test_reset_db_works(self):
         reset()
-        
+
     def test_create_user_works(self):
         reset()
         self.assertEqual(create_user("user1", "password1"), {"id": 1})
@@ -313,7 +321,7 @@ class TestDbFunctions(unittest.TestCase):
         reset()
         create_user("user1", "password1")
         create_tweet(1, "hello")
-        result = update_tweet(1, "hello world")
+        result = update_tweet(1, 1, "hello world")
         self.assertEqual(result, {"id": 1})
         self.assertEqual(get_tweet(1)["content"], "hello world")
 
@@ -321,7 +329,7 @@ class TestDbFunctions(unittest.TestCase):
         reset()
         create_user("user1", "password1")
         create_tweet(1, "only to be deleted")
-        self.assertEqual(delete_tweet(1), {"id": 1})
+        self.assertEqual(delete_tweet(1, 1), {"id": 1})
         self.assertEqual(get_tweet(1), {})
 
 

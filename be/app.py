@@ -21,29 +21,33 @@ def create_app():
         return {"status": "failure", "data": reason}
 
     @app.put("/users")
-    #issue: register a user with empty username and password (solved)
+    # issue: register a user with empty username and password (solved)
     def put_users():
         data = request.get_json()
-        if "username" not in data or not data["username"].strip() or "password" not in data or not data["password"].strip():
+        if (
+            "username" not in data
+            or not data["username"].strip()
+            or "password" not in data
+            or not data["password"].strip()
+        ):
             return failure("missing username or password field")
         try:
             result = db.create_user(data["username"], data["password"])
         except:
             return failure("something went wrong")
-        return success(dict(result))      
-    
+        return success(dict(result))
 
     @app.get("/users/<id>")
-    #issue: gives success message even if the user is not registered (solved)
+    # issue: gives success message even if the user is not registered (solved)
     def get_users_id(id):
         result = db.get_user(id)
         if len(result) == 0:
-            return failure("user not found")  
+            return failure("user not found")
         else:
             return success(dict(result))
 
     @app.get("/users")
-    #issue: success message even if there are no users (solved)
+    # issue: success message even if there are no users (solved)
     def get_users():
         result = db.get_users()
         if len(result) == 0:
@@ -66,7 +70,7 @@ def create_app():
             return failure(
                 "incorrect username or password"
             )  # even though we know password did not match
-        token = create_access_token(identity = result["id"])
+        token = create_access_token(identity=result["id"])
         return success(token)
 
     @app.delete("/users")
@@ -78,7 +82,7 @@ def create_app():
 
     @app.put("/follows/<id>")
     @jwt_required()
-    #issue: tried to follow non-existing user
+    # issue: tried to follow non-existing user
     def follow_user(id):
         current_user_id = get_jwt_identity()
         result = db.follow_user(current_user_id, id)
@@ -109,7 +113,7 @@ def create_app():
 
     @app.put("/tweets")
     @jwt_required()
-    #issue: can put empty tweets (solved)
+    # issue: can put empty tweets (solved)
     def create_tweet():
         current_user_id = get_jwt_identity()
         data = request.get_json()
@@ -121,7 +125,7 @@ def create_app():
     @app.get("/tweets/<id>")
     def get_tweet(id):
         # FIXME id can be anything and this will crash (done)
-        # Have a try...except block to return failure 
+        # Have a try...except block to return failure
         # Same goes for get_tweets
         result = db.get_tweet(id)
         if len(result) == 0:
@@ -158,7 +162,7 @@ def create_app():
         # FIXME validate the current_user_id is tweet.user_id (done using query)
         # otherwise any authenticated user can delete any tweet (done)
         try:
-            result = db.delete_tweet(current_user_id, id) 
+            result = db.delete_tweet(current_user_id, id)
             if len(result) == 0:
                 return failure("cannot delete the tweet from other account")
             else:
