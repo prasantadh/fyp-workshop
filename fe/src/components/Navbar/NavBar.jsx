@@ -1,6 +1,7 @@
-import React from 'react';
-import { FaHome, FaPen, FaUser } from 'react-icons/fa'; // Import icons from React Icons
-import './NavBar.css'; // Add your CSS file for styling
+import React from "react";
+import "./NavBar.css"; // Add your CSS file for styling
+import { GrHomeRounded } from "react-icons/gr";
+import { FaPen, FaUser } from "react-icons/fa";
 
 const NavBar = () => {
   return (
@@ -12,7 +13,7 @@ const NavBar = () => {
         <div className="nav-title">ICP-Twitter-Hub</div>
         <nav className="nav-buttons">
           <a href="/home" className="nav-button">
-            <FaHome />
+            <GrHomeRounded />
           </a>
           <a href="/write-tweet" className="nav-button">
             <FaPen />

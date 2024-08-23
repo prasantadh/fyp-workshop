@@ -37,3 +37,27 @@ code {
   --text: 16px;
   --subtext: 12px;
 }
+
+.react-tabs__tab-list {
+  gap: 20px;
+  /* background: red !important; */
+  width: fit-content;
+  border: none !important;
+  font-size: x-large;
+}
+
+.react-tabs__tab {
+  border: none !important;
+  user-select: none;
+}
+
+.react-tabs__tab:hover {
+  color: var(--secondary) !important;
+  transition: 0.5s all ease-in-out;
+}
+
+.react-tabs__tab--selected {
+  background: var(--primary) !important;
+  color: white !important;
+  font-weight: 700;
+}

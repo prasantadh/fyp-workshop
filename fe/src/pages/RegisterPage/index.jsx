@@ -4,12 +4,15 @@ import "./RegisterPage.css";
 import CustomInput from "../../components/Input";
 import { guestInstance } from "../../utils/axios";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const RegisterComponent = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const [incorrectData, setIncorrectData] = useState(null);
+
+  const navigate = useNavigate();
 
   const onUsernameChange = (event) => {
     console.log(event.target.value);
@@ -71,6 +74,9 @@ const RegisterComponent = () => {
                 isRounded
                 text={"Sign In"}
                 buttonType={ButtonType.SECONDARY}
+                onClick={() => {
+                  navigate("/login");
+                }}
               />
             </div>
           </div>
