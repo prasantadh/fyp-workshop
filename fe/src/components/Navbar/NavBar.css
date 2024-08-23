@@ -3,7 +3,7 @@
   display: flex;
   margin: auto;
   /* background-color: #f04bff; */
-  background: linear-gradient(red, yellow);
+  background: var(--gradient);
   gap: 277px;
   height: 128px;
   width: auto;

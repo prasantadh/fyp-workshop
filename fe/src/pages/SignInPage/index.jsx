@@ -4,8 +4,10 @@ import "./SignInPage.css";
 import CustomInput from "../../components/Input";
 import { guestInstance } from "../../utils/axios";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const SignInComponent = () => {
+  const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -53,7 +55,7 @@ const SignInComponent = () => {
 
   return (
     <>
-      <div className="main-container">
+      <div className="login-main-container">
         <div className="left-container">
           <div className="left-button-container">
             <h2>
@@ -67,6 +69,9 @@ const SignInComponent = () => {
                 className="test"
                 isRounded
                 text={"Sign Up"}
+                onClick={() => {
+                  navigate("/register");
+                }}
                 buttonType={ButtonType.SECONDARY}
               />
             </div>

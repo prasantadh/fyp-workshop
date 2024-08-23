@@ -9,6 +9,7 @@ import { Toaster, resolveValue } from "react-hot-toast";
 import RegisterPage from "./pages/RegisterPage";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { AuthRoute } from "./components/AuthRoute";
+import EditProfilePage from "./pages/EditProfilePage";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <h2>Test</h2>,
+      },
+      {
+        path: "/profile",
+        element: <EditProfilePage />,
       },
     ],
   },
