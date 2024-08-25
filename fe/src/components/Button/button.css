@@ -13,11 +13,7 @@
 }
 
 .button-extra:hover {
-  background: linear-gradient(
-    to bottom right,
-    var(--primary),
-    var(--secondary)
-  );
+  background: var(--gradient);
 }
 
 .button-extra:active {
