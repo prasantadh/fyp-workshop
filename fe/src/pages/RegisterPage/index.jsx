@@ -85,7 +85,7 @@ const RegisterComponent = () => {
           <div className="label-container">
             <label htmlFor="username">Username: </label>
             <CustomInput
-              hint={"Enter your Username"}
+              hint={"Username"}
               value={username}
               onChange={onUsernameChange}
             />
@@ -110,7 +110,7 @@ const RegisterComponent = () => {
           >
             <label htmlFor="password">Password: </label>
             <CustomInput
-              hint={"Enter your password"}
+              hint={"password"}
               value={password}
               onChange={onPasswordChange}
             />
