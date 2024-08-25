@@ -34,7 +34,8 @@
 }
 
 .nav-title {
-  font-size: 18px;
+  color: var(--black);
+  font-size: var(--title);
   font-weight: bold;
   width: 672px;
   height: 64px;
@@ -42,6 +43,7 @@
   justify-content: center;
   line-height: 36px;
   letter-spacing: 2px;
+  margin-top: 17.5px;
 }
 
 .nav-buttons {
@@ -54,7 +56,7 @@
 }
 
 .nav-button {
-  color: #333;
+  color: var(--black);
   font-size: 20px;
   text-decoration: none;
   display: flex;

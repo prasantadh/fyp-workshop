@@ -1,7 +1,10 @@
 import React from "react";
 import "./NavBar.css"; // Add your CSS file for styling
-import { GrHomeRounded } from "react-icons/gr";
-import { FaPen, FaUser } from "react-icons/fa";
+
+import FeedIcon from "../icons/FeedIcon";
+import SearchIcon from "../icons/SearchIcon";
+import WriteIcon from "../icons/WriteIcon";
+import ProfileIcon from "../icons/ProfileIcon";
 
 const NavBar = () => {
   return (
@@ -10,16 +13,19 @@ const NavBar = () => {
         <h1>FYP</h1>
       </div>
       <div className="nav-content">
-        <div className="nav-title">ICP-Twitter-Hub</div>
+        <div className="nav-title">ICP - Twitter - Hub</div>
         <nav className="nav-buttons">
           <a href="/home" className="nav-button">
-            <GrHomeRounded />
+            <FeedIcon/>
           </a>
           <a href="/write-tweet" className="nav-button">
-            <FaPen />
+            <SearchIcon/>
+          </a>
+          <a href="/write-tweet" className="nav-button">
+            <WriteIcon/>
           </a>
           <a href="/profile" className="nav-button">
-            <FaUser />
+            <ProfileIcon/>
           </a>
         </nav>
       </div>
