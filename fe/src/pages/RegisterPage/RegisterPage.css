@@ -1,8 +1,13 @@
 .main-container {
   display: flex;
-  width: 100%;
-  height: 100vh;
-  flex-direction: row-reverse;
+  width: 1200px;
+  height: 642px;
+  position: absolute;
+  margin-left: 120px;
+  /* margin-right:120px; */
+  margin-top: 5vh;
+  box-shadow: var(--shadow);
+  /* half of you height */
   /* background-color: rgb(243, 184, 184); */
 }
 
@@ -11,7 +16,7 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: center; 
   align-items: center;
 }
 
