@@ -7,6 +7,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: #fafafa, 0.75;
 }
 
 code {
@@ -31,6 +32,7 @@ code {
   --success: #1fbf43;
   --error: #e64034;
 
+  --shadow: -6px 6px 10px 4px rgb(0 0 0/ 0.35);
   /* Text-size styles */
   --title: 24px;
   --subtitle: 22px;
