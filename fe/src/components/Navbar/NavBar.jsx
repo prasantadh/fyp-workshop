@@ -5,6 +5,7 @@ import FeedIcon from "../icons/FeedIcon";
 import SearchIcon from "../icons/SearchIcon";
 import WriteIcon from "../icons/WriteIcon";
 import ProfileIcon from "../icons/ProfileIcon";
+import { Link } from "react-router-dom";
 
 const NavBar = () => {
   return (
@@ -15,17 +16,25 @@ const NavBar = () => {
       <div className="nav-content">
         <div className="nav-title">ICP - Twitter - Hub</div>
         <nav className="nav-buttons">
-          <a href="/home" className="nav-button">
-            <FeedIcon/>
+          <a className="nav-button">
+            <Link to="/">
+                <FeedIcon />
+            </Link>
           </a>
-          <a href="/write-tweet" className="nav-button">
-            <SearchIcon/>
+          <a className="nav-button">
+            <Link to="/search">
+              <SearchIcon />
+            </Link>
           </a>
-          <a href="/write-tweet" className="nav-button">
-            <WriteIcon/>
+          <a className="nav-button">
+            <Link to="/write-tweet">
+              <WriteIcon />
+            </Link>
           </a>
-          <a href="/profile" className="nav-button">
-            <ProfileIcon/>
+          <a className="nav-button">
+            <Link to="/profile">
+              <ProfileIcon />
+            </Link>
           </a>
         </nav>
       </div>
