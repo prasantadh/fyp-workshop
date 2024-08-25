@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Outlet, Router } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { Outlet, Router, useNavigate } from "react-router-dom";
 
 export const AuthRoute = ({ children }) => {
   const [loading, setLoading] = useState(true);
