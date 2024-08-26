@@ -6,6 +6,7 @@ import SearchIcon from "../icons/SearchIcon";
 import WriteIcon from "../icons/WriteIcon";
 import ProfileIcon from "../icons/ProfileIcon";
 import { Link } from "react-router-dom";
+import LogoutIcon from "../icons/LogoutIcon";
 
 const NavBar = () => {
   return (
@@ -34,6 +35,11 @@ const NavBar = () => {
           <a className="nav-button">
             <Link to="/profile">
               <ProfileIcon />
+            </Link>
+          </a>
+          <a className="nav-button">
+            <Link to="/logOut">
+              <LogoutIcon/>
             </Link>
           </a>
         </nav>
