@@ -10,6 +10,7 @@ import RegisterPage from "./pages/RegisterPage";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { AuthRoute } from "./components/AuthRoute";
 import EditProfilePage from "./pages/EditProfilePage";
+import { ProtectedRoute } from "./components/ProtectedRoute";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -28,7 +29,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/",
-    element: <App />,
+    element: (
+      <ProtectedRoute>
+        <App />
+      </ProtectedRoute>
+    ),
     children: [
       {
         path: "/",
