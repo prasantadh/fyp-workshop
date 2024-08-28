@@ -1,3 +1,5 @@
+CREATE EXTENSION pgcrypto;
+
 DROP TABLE IF EXISTS tweets, follows, users ;
 
 -- create the users table
