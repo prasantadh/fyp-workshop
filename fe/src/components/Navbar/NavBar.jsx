@@ -27,7 +27,8 @@ const NavBar = () => {
               <SearchIcon />
             </Link>
           </a>
-          <a className="nav-button">
+          <a className="nav-button"> 
+            {/* we create a modal for writing */}
             <Link to="/write-tweet">
               <WriteIcon />
             </Link>

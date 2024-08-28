@@ -31,8 +31,9 @@ code {
 
   --success: #1fbf43;
   --error: #e64034;
-
-  --shadow: -6px 6px 10px 4px rgb(0 0 0/ 0.35);
+ 
+  --shadow-1: -6px 6px 10px 4px rgb(0 0 0/ 0.35);
+  --shadow-2: -2px 2px 10px rgb(0 0 0/ 0.35);
   /* Text-size styles */
   --title: 24px;
   --subtitle: 22px;
