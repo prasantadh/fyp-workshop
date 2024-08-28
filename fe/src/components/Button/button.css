@@ -12,6 +12,7 @@
 }
 
 .button-extra:hover {
+  border:none;
   background: var(--gradient);
 }
 
@@ -22,7 +23,7 @@
 
 .button-extra:disabled {
   background: var(--gray);
-  border: 1px solid transparent;
+  border: 2px solid transparent;
 }
 
 .button-primary {
@@ -41,7 +42,8 @@
 
 .button-primary:active {
   background: var(--primary);
-  border: 1px solid var(--black-75);
+  border: 4px solid var(--black-75);
+  opacity: 80%;
 }
 
 .rounded {

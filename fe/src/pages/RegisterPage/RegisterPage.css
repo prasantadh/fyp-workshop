@@ -4,25 +4,14 @@
   height: 642px;
   position: absolute;
   margin-left: 120px;
+  margin-right: auto;
   margin-top: 4vh;
   box-shadow: var(--shadow-1);
-  background: var(--black-5);
-  /* half of you height */
-
-}
-
-.left-container h1 {
-  width: 100%;
-  height: 61px;
-  font-size: 52px;
-  color: var(--primary);
-  margin-top: 26px;
-  margin-left:24px;
-  padding-left: 8px;
-  gap:64px;
+  
 }
 
 .left-container, .right-container {
+  background: var(--black-5);
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -31,19 +20,22 @@
 }
 
 .left-container {
-  
   /* background: var(--black-5); */
   color: var(--black);
-  margin-top:48px;
-  margin-left: 32px;
+  padding-top:48px;
+  padding-left: 32px;
   margin-right:auto;
 }
-
-.left-container h2 {
-  font-size: 44px;
-  margin-bottom: 8rem;
+.left-container h1 {
+  /* width: 100%;
+  height: 61px; */
+  font-size: 52px;
+  color: var(--primary);
+  /* margin-top: 26px; */
+  margin-left:24px;
+  /* padding-left: 8px; */
+  gap:64px;
 }
-
 .label-container {
   /* display: flex;
   flex-direction: column; */
@@ -54,42 +46,63 @@
   margin-left: 24px;
 }
 
-.left-button-container {
-  /* width: 100%; */
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-}
-
+/* css for right container starts here */
 .right-container {
   background: var(--gradient);
   color: white;
-  justify-content: space-around;
-  /* align-items: start; */
+  padding-top:48px;
+  display: flex;
+  flex-direction: column;  
+  /* justify-content: space-around; */
+  align-items: start;
+  width: 100%;
+  /* gap: 100px; */
 }
 
-.right-container {
-  /* display: flex;
-    flex-direction: column; */
-    width: 100%;
-    gap: 1px;
+.greet-container {
+  width: 100%;
+  height:336px;
+  margin-top:48px;
+  margin-left: 32px;
+  margin-right:auto;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  position: relative;
 }
-
-.right-container label {
-  /* text-decoration: line-through; */
-  font-size: var(--subtitle);
-  font-weight: bold;
+.greet-container h1{
+  font-size: 44px;
+  font-weight:900;
+  line-height: 22px;
+  letter-spacing: 2.25px;
 }
-
+.greet-container span{
+  font-size: 22px;
+  font-weight: 900;
+  line-height: 16px;
+  letter-spacing: 2.25px;
+}
+.query-label{
+  display: flex;
+  justify-content: center; 
+  align-items: center;    
+  bottom: 0; 
+  position: absolute;
+  width: 100%;
+  letter-spacing: 1.75px;
+  gap:26px;
+}
 .button-wrapper {
-  width: 320px;
+  display: flex;
+  justify-content: center; 
+  align-items: center;     
+  width: 100%;
 }
 
 @media only screen and (max-width: 600px) {
   .right-container {
     display: none;
   }
-
   .button-wrapper {
     width: 60%;
   }

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import CustomButton, { ButtonType } from "../../components/Button";
-import "./SignInPage.css";
+import SignInCss from "./SignInPage.module.css";
 import CustomInput from "../../components/Input";
 import { guestInstance } from "../../utils/axios";
 import toast from "react-hot-toast";

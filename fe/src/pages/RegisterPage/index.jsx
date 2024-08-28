@@ -83,13 +83,7 @@ const RegisterComponent = () => {
               {incorrectData}
             </p>
           )}
-
-          <div
-            className="label-container"
-            // style={{
-            //   marginTop: "20px",
-            // }}
-          >
+          <div className="label-container">          
             <label htmlFor="password"><b>PASSWORD</b> </label>
             <br/>
             <CustomInput
@@ -123,27 +117,28 @@ const RegisterComponent = () => {
           </div>
         </div>
         <div className="right-container">
-        <div className="left-button-container">
-            <h2>
-              Start Your Journey!
-            </h2>
-            <br/>
-            <span>Get Started now!</span>
-
-            <p>Already have an account?</p>
-            <div className="button-wrapper">
-              <CustomButton
-                className="test"
-                isRounded
-                text={"Sign In"}
-                buttonType={ButtonType.SECONDARY}
-                onClick={() => {
-                  navigate("/login");
-                }}
-              />
+          <div className="greet-container">
+              <h1>
+                Start Your Journey!
+              </h1>
+              <span>Get Started now!</span>
+            <div className="query-label">
+              <p>Already have an account?</p>
             </div>
+              
           </div>
-          
+          <div className="button-wrapper">
+                <CustomButton
+                  className="test"
+                  isRounded
+                  text={"Sign In"}
+                  buttonType={ButtonType.SECONDARY}
+                  onClick={() => {
+                    navigate("/login");
+                  }}
+                  style={{height:"64px", width: "320px"}}
+                />
+              </div>
         </div>
       </div>
     </>
