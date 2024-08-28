@@ -1,7 +1,29 @@
 <html>
 <head>
-    <script src="jquery.js"></script>
     <link href="styles.css" rel="stylesheet" />
+    <script type="text/javascript">
+      async function signin() {
+        const data = await fetch("http://127.0.0.1:5000/users", 
+          {
+            method: "POST", 
+            body: JSON.stringify({
+              "username": this["signin_form"]["username"].value,
+              "password": this["signin_form"]["password"].value,
+            }),
+            headers: {
+              "Content-Type": "application/json"
+            }
+          }
+        ).then(response => response.json());
+        if (data.status == "success") {
+          document.getElementById('error').innerHTML = "there are no errors";
+          window.location.replace('http://localhost:8000/index.html');
+        } else {
+          document.getElementById('error').innerHTML = data.data;
+        }
+        console.log(data.status)
+      }
+    </script>
 </head>
   <body>
     <div class="container min-h-screen flex flex-col md:flex-row">
@@ -22,8 +44,9 @@
       </div>
 
       <div class="container w-full md:w-1/2 grid place-content-center">
+        <div id="error" class="text-red-500"></div>
         <div class="form">
-          <form>
+          <form name="signin_form" action="javascript:signin()">
             <div class="py-1">
               <label for="username" class="font-bold">USERNAME</label>
             </div>

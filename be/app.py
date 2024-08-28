@@ -1,5 +1,6 @@
-from flask import Flask
+from flask import Flask, Response
 from flask import request
+from flask_cors import CORS, cross_origin
 
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import JWTManager
@@ -24,6 +25,8 @@ def create_app():
     # issue: register a user with empty username and password (solved)
     def put_users():
         data = request.get_json()
+        if data is None:
+            return failure("json body missing")
         if (
             "username" not in data
             or not data["username"].strip()
@@ -33,7 +36,7 @@ def create_app():
             return failure("missing username or password field")
         try:
             result = db.create_user(data["username"], data["password"])
-        except:
+        except Exception as _:
             return failure("something went wrong")
         return success(dict(result))
 
@@ -59,6 +62,8 @@ def create_app():
     @app.post("/users")
     def login_user():
         data = request.get_json()
+        if data is None:
+            return failure("missing json body")
         if "username" not in data or "password" not in data:
             return failure("missing username or password field")
         result = db.login_user(data["username"], data["password"])
@@ -117,12 +122,15 @@ def create_app():
     def create_tweet():
         current_user_id = get_jwt_identity()
         data = request.get_json()
+        if data is None:
+            return failure("missing json body")
         if "content" not in data or not data["content"].strip():
             return failure('missing "content" field')
         result = db.create_tweet(current_user_id, data["content"])
         return success(dict(result))
 
     @app.get("/tweets/<id>")
+    @cross_origin(origin="*")
     def get_tweet(id):
         # FIXME id can be anything and this will crash (done)
         # Have a try...except block to return failure
@@ -147,6 +155,9 @@ def create_app():
         # FIXME validate the current_user_id is tweet.user_id (done using query)
         # otherwise any authenticated user can edit any tweet (done)
         data = request.get_json()
+        if data is None:
+            return failure("improper json data posted")
+
         if "content" not in data or not data["content"].strip():
             return failure('missing "content" field')
         result = db.update_tweet(current_user_id, id, data["content"])
@@ -175,4 +186,5 @@ def create_app():
 
 if __name__ == "__main__":
     app = create_app()
+    CORS(app, origins="*")
     app.run(debug=True)
