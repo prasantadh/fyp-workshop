@@ -4,36 +4,54 @@
   height: 642px;
   position: absolute;
   margin-left: 120px;
-  /* margin-right:120px; */
-  margin-top: 5vh;
-  box-shadow: var(--shadow);
+  margin-top: 4vh;
+  box-shadow: var(--shadow-1);
+  background: var(--black-5);
   /* half of you height */
-  /* background-color: rgb(243, 184, 184); */
+
 }
 
-.left-container,
-.right-container {
+.left-container h1 {
+  width: 100%;
+  height: 61px;
+  font-size: 52px;
+  color: var(--primary);
+  margin-top: 26px;
+  margin-left:24px;
+  padding-left: 8px;
+  gap:64px;
+}
+
+.left-container, .right-container {
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center; 
-  align-items: center;
+  justify-content: left; 
+  align-items: left;
 }
 
 .left-container {
-  background: var(--gradient);
-  color: white;
-  justify-content: space-around;
-  /* align-items: start; */
-}
-
-.right-container {
-  background: var(--black-5);
+  
+  /* background: var(--black-5); */
+  color: var(--black);
+  margin-top:48px;
+  margin-left: 32px;
+  margin-right:auto;
 }
 
 .left-container h2 {
   font-size: 44px;
   margin-bottom: 8rem;
+}
+
+.label-container {
+  /* display: flex;
+  flex-direction: column; */
+  width: 100%;
+  gap: 1px;
+}
+.label-container label {
+  margin-left: 24px;
 }
 
 .left-button-container {
@@ -43,11 +61,18 @@
   align-items: start;
 }
 
-.right-container .label-container {
-  min-width: 60%;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+.right-container {
+  background: var(--gradient);
+  color: white;
+  justify-content: space-around;
+  /* align-items: start; */
+}
+
+.right-container {
+  /* display: flex;
+    flex-direction: column; */
+    width: 100%;
+    gap: 1px;
 }
 
 .right-container label {
@@ -57,12 +82,11 @@
 }
 
 .button-wrapper {
-  width: 200px;
-  margin-top: 10px;
+  width: 320px;
 }
 
 @media only screen and (max-width: 600px) {
-  .left-container {
+  .right-container {
     display: none;
   }
 
