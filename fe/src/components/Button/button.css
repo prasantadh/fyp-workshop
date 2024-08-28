@@ -4,7 +4,6 @@
   background: var(--secondary);
   color: white;
   padding: 0.8rem 1.5rem;
-  border-radius: 8px;
   margin-left: 4px;
   font-size: var(--text);
   font-weight: 600;
@@ -13,19 +12,11 @@
 }
 
 .button-extra:hover {
-  background: linear-gradient(
-    to bottom right,
-    var(--primary),
-    var(--secondary)
-  );
+  background: var(--gradient);
 }
 
 .button-extra:active {
-  background: linear-gradient(
-    to bottom right,
-    var(--primary),
-    var(--secondary)
-  );
+  background: var(--gradient);
   border: 1px solid var(--black-75);
 }
 
@@ -39,11 +30,7 @@
 }
 
 .button:hover {
-  background: linear-gradient(
-    to bottom right,
-    var(--primary),
-    var(--secondary)
-  );
+  background: var(--gradient);
   border: 1px solid transparent;
 }
 
@@ -58,5 +45,5 @@
 }
 
 .rounded {
-  border-radius: 32px;
+  border-radius: 16px;
 }

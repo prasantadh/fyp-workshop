@@ -1,16 +1,18 @@
 .input {
   border: none;
-  background: white;
+  background: #F5F2F4;
   padding: 0;
   margin: 0;
   width: 100%;
   /* font-weight: 600; */
   font-size: var(--text);
   /* outline: none; */
-  box-shadow: rgba(0, 0, 0, 0.2) 1.95px 1.95px 2.6px;
+  box-shadow: var(--shadow);
   padding: 0.75rem 0.5rem;
   /* margin-bottom: 20px; */
-  border-radius: 8px;
+  border-radius: 40px;
+  padding-left:16px;
+  box-shadow:var(--shadow-2);
 }
 
 .input:hover,
@@ -18,10 +20,10 @@
 .input:active {
   border: none;
   outline: none;
-  box-shadow: rgb(20, 134, 210, 0.3) 1.95px 1.95px 2.6px;
 }
 
 .input::placeholder {
-  color: var(--black-25);
+ 
+  color: var(--black-75);
   opacity: 1;
 }

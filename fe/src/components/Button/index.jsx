@@ -8,7 +8,7 @@ export const ButtonType = {
 };
 
 const CustomButton = ({
-  buttonType = ButtonType.SECONDARY_GRADIENT,
+  buttonType = ButtonType.SECONDARY,
   isRounded,
   disabled,
   text,

@@ -15,10 +15,10 @@
 }
 
 .left-container {
-  background: var(--gradient);
+  /* background: var(--gradient); */
   color: white;
   justify-content: space-around;
-  /* align-items: start; */
+  align-items: start;
 }
 
 .right-container {
