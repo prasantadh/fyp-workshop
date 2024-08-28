@@ -1,0 +1,33 @@
+.main {
+  background-color: red;
+}
+
+.user_info {
+  display: flex;
+  width: 100%;
+}
+
+.frame_19 {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.frame_19_2 {
+  display: flex;
+  flex: 1;
+  padding-left: 20px;
+}
+
+.circularProfile {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: #000;
+  display: flex;
+  justify-content: center;
+  color: white;
+  align-items: center;
+  font-size: 50px;
+  font-weight: bold;
+}
