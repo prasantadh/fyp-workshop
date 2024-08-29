@@ -1,4 +1,4 @@
-.main-container {
+.mainContainer {
   display: flex;
   width: 1200px;
   height: 642px;
@@ -10,7 +10,7 @@
   
 }
 
-.left-container, .right-container {
+.leftContainer, .rightContainer {
   background: var(--black-5);
   flex: 1;
   display: flex;
@@ -19,14 +19,14 @@
   align-items: left;
 }
 
-.left-container {
+.leftContainer {
   /* background: var(--black-5); */
   color: var(--black);
   padding-top:48px;
   padding-left: 32px;
   margin-right:auto;
 }
-.left-container h1 {
+.leftContainer h1 {
   /* width: 100%;
   height: 61px; */
   font-size: 52px;
@@ -36,18 +36,18 @@
   /* padding-left: 8px; */
   gap:64px;
 }
-.label-container {
+.labelContainer {
   /* display: flex;
   flex-direction: column; */
   width: 100%;
   gap: 1px;
 }
-.label-container label {
+.labelContainer label {
   margin-left: 24px;
 }
 
 /* css for right container starts here */
-.right-container {
+.rightContainer {
   background: var(--gradient);
   color: white;
   padding-top:48px;
@@ -59,7 +59,7 @@
   /* gap: 100px; */
 }
 
-.greet-container {
+.greetContainer {
   width: 100%;
   height:336px;
   margin-top:48px;
@@ -70,19 +70,19 @@
   align-items: start;
   position: relative;
 }
-.greet-container h1{
+.greetContainer h1{
   font-size: 44px;
   font-weight:900;
   line-height: 22px;
   letter-spacing: 2.25px;
 }
-.greet-container span{
+.greetContainer span{
   font-size: 22px;
   font-weight: 900;
   line-height: 16px;
   letter-spacing: 2.25px;
 }
-.query-label{
+.queryLabel{
   display: flex;
   justify-content: center; 
   align-items: center;    
@@ -92,7 +92,7 @@
   letter-spacing: 1.75px;
   gap:26px;
 }
-.button-wrapper {
+.buttonWrapper {
   display: flex;
   justify-content: center; 
   align-items: center;     
@@ -100,10 +100,10 @@
 }
 
 @media only screen and (max-width: 600px) {
-  .right-container {
+  .rightContainer {
     display: none;
   }
-  .button-wrapper {
+  .buttonWrapper {
     width: 60%;
   }
 }

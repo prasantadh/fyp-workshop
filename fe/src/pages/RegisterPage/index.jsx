@@ -59,11 +59,11 @@ const RegisterComponent = () => {
 
   return (
     <>
-      <div className={RegisterCss.main-container}>
+      <div className={RegisterCss.mainContainer}>
         
-        <div className={RegisterCss.left-container}>
+        <div className={RegisterCss.leftContainer}>
           <h1>FYP</h1>
-          <div className={RegisterCss.label-container}>
+          <div className={RegisterCss.labelContainer}>
             <label htmlFor="username"><b>USERNAME</b> </label><br/>
             <CustomInput
               hint={"username"}
@@ -83,7 +83,7 @@ const RegisterComponent = () => {
               {incorrectData}
             </p>
           )}
-          <div className={RegisterCss.label-container}>          
+          <div className={RegisterCss.labelContainer}>          
             <label htmlFor="password"><b>PASSWORD</b> </label>
             <br/>
             <CustomInput
@@ -106,7 +106,7 @@ const RegisterComponent = () => {
             </p>
           )}
 
-          <div className={RegisterCss.button-wrapper}>
+          <div className={RegisterCss.buttonWrapper}>
             <CustomButton
               text={"Sign Up"}
               buttonType={ButtonType.PRIMARY}
@@ -116,18 +116,18 @@ const RegisterComponent = () => {
             />
           </div>
         </div>
-        <div className={RegisterCss.right-container}>
-          <div className={RegisterCss.greet-container}>
+        <div className={RegisterCss.rightContainer}>
+          <div className={RegisterCss.greetContainer}>
               <h1>
                 Start Your Journey!
               </h1>
               <span>Get Started now!</span>
-            <div className={RegisterCss.query-label}>
+            <div className={RegisterCss.queryLabel}>
               <p>Already have an account?</p>
             </div>
               
           </div>
-          <div className={RegisterCss.button-wrapper}>
+          <div className={RegisterCss.buttonWrapper}>
                 <CustomButton
                   className="test"
                   isRounded
