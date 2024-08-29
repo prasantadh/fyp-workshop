@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import CustomButton, { ButtonType } from "../../components/Button";
-import "./RegisterPage.css";
+import RegisterCss from "./RegisterPage.module.css";
 import CustomInput from "../../components/Input";
 import { guestInstance } from "../../utils/axios";
 import toast from "react-hot-toast";
@@ -59,11 +59,11 @@ const RegisterComponent = () => {
 
   return (
     <>
-      <div className="main-container">
+      <div className={RegisterCss.main-container}>
         
-        <div className="left-container">
+        <div className={RegisterCss.left-container}>
           <h1>FYP</h1>
-          <div className="label-container">
+          <div className={RegisterCss.label-container}>
             <label htmlFor="username"><b>USERNAME</b> </label><br/>
             <CustomInput
               hint={"username"}
@@ -83,7 +83,7 @@ const RegisterComponent = () => {
               {incorrectData}
             </p>
           )}
-          <div className="label-container">          
+          <div className={RegisterCss.label-container}>          
             <label htmlFor="password"><b>PASSWORD</b> </label>
             <br/>
             <CustomInput
@@ -106,7 +106,7 @@ const RegisterComponent = () => {
             </p>
           )}
 
-          <div className="button-wrapper">
+          <div className={RegisterCss.button-wrapper}>
             <CustomButton
               text={"Sign Up"}
               buttonType={ButtonType.PRIMARY}
@@ -116,18 +116,18 @@ const RegisterComponent = () => {
             />
           </div>
         </div>
-        <div className="right-container">
-          <div className="greet-container">
+        <div className={RegisterCss.right-container}>
+          <div className={RegisterCss.greet-container}>
               <h1>
                 Start Your Journey!
               </h1>
               <span>Get Started now!</span>
-            <div className="query-label">
+            <div className={RegisterCss.query-label}>
               <p>Already have an account?</p>
             </div>
               
           </div>
-          <div className="button-wrapper">
+          <div className={RegisterCss.button-wrapper}>
                 <CustomButton
                   className="test"
                   isRounded
