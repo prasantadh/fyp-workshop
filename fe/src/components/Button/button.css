@@ -8,10 +8,10 @@
   font-size: var(--text);
   font-weight: 600;
   cursor: pointer;
-  border: 1px solid transparent;
+  /* border: 1px solid transparent; */
 }
 
-.button-extra:hover {
+/* .button-extra:hover {
   border:none;
   background: var(--gradient);
 }
@@ -24,7 +24,7 @@
 .button-extra:disabled {
   background: var(--gray);
   border: 2px solid transparent;
-}
+} */
 
 .button-primary {
   background: var(--primary);
@@ -32,7 +32,6 @@
 
 .button:hover {
   background: var(--gradient);
-  border: 1px solid transparent;
 }
 
 .button:active {
