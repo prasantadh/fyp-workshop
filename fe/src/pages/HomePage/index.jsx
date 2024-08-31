@@ -4,8 +4,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { authenticAxiosInstance } from "../../utils/axios";
 import toast from "react-hot-toast";
 import { checkForInvalidOrExpiredToken } from "../../utils/jwt_decode";
-import { SinglePost } from "../EditProfilePage";
+
 import { getUsers } from "../../utils/Users";
+import SinglePost from "../../components/SinglePost";
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -18,7 +19,6 @@ const HomePage = () => {
 
   const [currentUserIndex, setCurrentUserIndex] = useState(0);
   const [tweetsFetched, setTweetsFetched] = useState(0);
-
 
   // Function to fetch tweets from a user
   const fetchTweets = async (userId) => {
@@ -68,7 +68,6 @@ const HomePage = () => {
 
     setCurrentUserIndex((prevIndex) => prevIndex + 1);
   };
-
 
   useEffect(() => {
     const observer = new IntersectionObserver(([entry]) => {
@@ -159,11 +158,12 @@ const HomePage = () => {
         flexDirection: "column",
       }}
     >
-      {feeds.map((item, index) => {
-        let currentUser = users.find((user) => user.id === item.user_id);
+      {users &&
+        feeds.map((item, index) => {
+          let currentUser = users.find((user) => user.id === item.user_id);
 
-        return <SinglePost tweet={item} user={currentUser} />;
-      })}
+          return <SinglePost tweet={item} user={currentUser} />;
+        })}
       {isLoadiong && (
         <p>{feeds.length > 0 ? "Loading more tweets..." : "Loading tweets"}</p>
       )}

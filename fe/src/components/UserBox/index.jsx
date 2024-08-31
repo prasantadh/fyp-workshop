@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import style from "./user.module.css";
 import CustomButton from "../Button";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { authenticAxiosInstance } from "../../utils/axios";
 import toast from "react-hot-toast";
 import { checkForInvalidOrExpiredToken } from "../../utils/jwt_decode";
@@ -83,9 +83,9 @@ const UserBox = ({ user, followerList, isFollowed }) => {
 
   return (
     <div className={style.flex}>
-      <div className={`${style.circularProfile}`}>
+      <Link to={"/profile/" + user.id} className={`${style.circularProfile}`}>
         {user.username.slice(0, 1).toUpperCase()}
-      </div>
+      </Link>
       <h2>{user.username}</h2>
       {isFollowed || isAlreadyFollowing ? (
         <CustomButton
