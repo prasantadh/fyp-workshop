@@ -13,6 +13,7 @@ import EditProfilePage from "./pages/EditProfilePage";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import SearchPage from "./pages/SearchPage/SearchPage";
 import HomePage from "./pages/HomePage";
+import UserProfilePage from "./pages/ProfilePage/UserProfilePage";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -48,6 +49,10 @@ const router = createBrowserRouter([
       {
         path: "/profile",
         element: <EditProfilePage />,
+      },
+      {
+        path: "/profile/:id",
+        element: <UserProfilePage />,
       },
     ],
   },

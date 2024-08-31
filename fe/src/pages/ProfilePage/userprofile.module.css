@@ -1,0 +1,88 @@
+.main {
+  background-color: rgb(221, 221, 221);
+}
+
+.user_info {
+  display: flex;
+  width: 100%;
+}
+
+.frame_19 {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.frame_19_2 {
+  display: flex;
+  flex: 1;
+  padding-left: 20px;
+}
+
+.circularProfile {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: #000;
+  display: flex;
+  justify-content: center;
+  color: white;
+  align-items: center;
+  font-size: 50px;
+  font-weight: bold;
+}
+
+.singlePost {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  width: 100%;
+  background: blue;
+}
+
+.singleCircularProfile {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: #000;
+  display: flex;
+  justify-content: center;
+  color: white;
+  align-items: center;
+  font-size: 50px;
+  font-weight: bold;
+}
+
+.postRightContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.singlePostHeaderContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  background: #a88181;
+}
+
+.singlePostHeader {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+}
+
+.dropdown {
+  position: relative;
+}
+
+.modal {
+  position: absolute;
+  background-color: white;
+  top: 70%;
+  right: 20px;
+  padding: 0 8px;
+}
