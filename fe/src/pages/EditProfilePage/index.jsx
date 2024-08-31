@@ -24,12 +24,176 @@ import { getUsers } from "../../utils/Users";
 import UserBox from "../../components/UserBox";
 import SinglePost from "../../components/SinglePost";
 
+const DeleteModal = ({ onClose }) => {
+  const navigate = useNavigate();
+  const deleteAccountAPI = () =>
+    authenticAxiosInstance
+      .delete(`/users`)
+      .then(function (response) {
+        console.log(response);
+        if (response.data) {
+          if (response.data.status === "failure") {
+            toast.error(response.data.data);
+          } else {
+            toast.success("User Deleted: " + response.data.status);
+            console.log("User Deleted", response.data.data);
+            deleteCookie("tokenFromServer");
+            window.location.reload();
+            onClose();
+          }
+        } else {
+          toast.error("User Deleted: Something Went Wrong.");
+        }
+      })
+      .catch(function (error) {
+        if (error.response) {
+          console.log(error.response.data);
+
+          let invalid = checkForInvalidOrExpiredToken(error.response.data.msg);
+
+          if (invalid) {
+            navigate("/login");
+            toast.error("You need to login");
+          } else {
+            console.log("Error 0", error.response.data);
+          }
+        }
+      });
+
+  return (
+    <div>
+      <h2>Would you like to delete your account?</h2>
+      <div>
+        <button
+          onClick={() => {
+            deleteAccountAPI();
+          }}
+        >
+          Yes
+        </button>
+        <button
+          onClick={() => {
+            onClose();
+          }}
+        >
+          No
+        </button>
+      </div>
+    </div>
+  );
+};
+
+const EditProfileModal = ({ onCancel, user }) => {
+  const [userName, setuserName] = useState(user.username);
+  const [openDeleteConfirmBox, setOpenDeleteConfirmBox] = useState(false);
+
+  const navigate = useNavigate();
+
+  const onUpdateUsername = () => {
+    //TODO
+    // Incomplete in backend
+    toast.error("No implementation in backend");
+    // authenticAxiosInstance
+    //   .patch("/users", {
+    //     username: userName,
+    //   })
+    //   .then(function (response) {
+    //     console.log(response);
+    //     if (response.data) {
+    //       if (response.data.status === "failure") {
+    //         toast.error(response.data.data);
+    //       } else {
+    //         toast.success("Changed: " + response.data.status);
+    //         console.log(response.data.data);
+    //       }
+    //     } else {
+    //       toast.error("Followers: Something Went Wrong.");
+    //     }
+    //   })
+    //   .catch(function (error) {
+    //     if (error.response) {
+    //       console.log(error.response.data);
+
+    //       let invalid = checkForInvalidOrExpiredToken(error.response.data.msg);
+
+    //       if (invalid) {
+    //         navigate("/login");
+    //         toast.error("You need to login");
+    //       } else {
+    //         console.log("Error 0", error.response.data);
+    //       }
+    //     }
+    //   });
+  };
+
+  return (
+    <>
+      <Modal
+        isOpen={openDeleteConfirmBox}
+        onClose={() => {
+          setOpenDeleteConfirmBox(false);
+        }}
+        children={
+          <DeleteModal
+            onClose={() => {
+              setOpenDeleteConfirmBox(false);
+            }}
+          />
+        }
+      />
+      <div>
+        <h2>Username</h2>
+        <CustomInput
+          value={userName}
+          onChange={(e) => {
+            setuserName(e.target.value);
+          }}
+        />
+
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            cursor: "pointer",
+          }}
+          onClick={() => {
+            setOpenDeleteConfirmBox(true);
+          }}
+        >
+          Delete <WriteIcon />
+        </div>
+        <div
+          style={{
+            display: "flex",
+          }}
+        >
+          <button
+            onClick={() => {
+              onCancel();
+            }}
+          >
+            Cancel
+          </button>
+          <button
+            onClick={() => {
+              onUpdateUsername();
+            }}
+          >
+            Update
+          </button>
+        </div>
+      </div>
+    </>
+  );
+};
 
 const EditProfilePage = () => {
   const [user, setUser] = useState();
   const [followers, setFollowers] = useState(null);
   const [tweets, setTweets] = useState(null);
   const [isOpenFollowerModal, setIsOpenFollowerModal] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -224,6 +388,21 @@ const EditProfilePage = () => {
         }
       />
 
+      <Modal
+        isOpen={isEditModalOpen}
+        onClose={() => {
+          setIsEditModalOpen(false);
+        }}
+        children={
+          <EditProfileModal
+            onCancel={() => {
+              setIsEditModalOpen(false);
+            }}
+            user={user}
+          />
+        }
+      />
+
       <div className={`${style.main}`}>
         {user && (
           <div className={`${style.user_info}`}>
@@ -246,6 +425,9 @@ const EditProfilePage = () => {
                 text={"Edit Profile"}
                 style={{
                   width: "40%",
+                }}
+                onClick={() => {
+                  setIsEditModalOpen(true);
                 }}
               />
             </div>
@@ -272,6 +454,5 @@ const EditProfilePage = () => {
     </>
   );
 };
-
 
 export default EditProfilePage;
