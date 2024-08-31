@@ -67,30 +67,33 @@ const SignInComponent = () => {
 
   return (
     <>
-      <div className="login-main-container">
-        <div className="left-container">
-          <div className="left-button-container">
-            <h2>
+      <div className={SignInCss.mainContainer}>
+        <div className={SignInCss.leftContainer}>
+          <div className={SignInCss.greetContainer}>
+            <h1>
               Hey There! <br />
-              Good to see you ...
-            </h2>
-
-            <p>Don't have an account?</p>
-            <div className="button-wrapper">
+            </h1>
+            <span>Good to see you ...</span>
+            <div className={SignInCss.queryLabel}>
+              <p>Don't have an account?</p>
+            </div>
+            
+            <div className={SignInCss.buttonWrapper}>
               <CustomButton
+                buttonType={ButtonType.SECONDARY}
                 className="test"
                 isRounded
                 text={"Sign Up"}
                 onClick={() => {
                   navigate("/register");
                 }}
-                buttonType={ButtonType.SECONDARY}
+                
               />
             </div>
           </div>
         </div>
-        <div className="right-container">
-          <div className="label-container">
+        <div className={SignInCss.rightContainer}>
+          <div className={SignInCss.labelContainer}>
             <label htmlFor="username">Username: </label>
             <CustomInput
               hint={"Enter your Username"}
@@ -110,7 +113,7 @@ const SignInComponent = () => {
             </p>
           )}
 
-          <div className="label-container">
+          <div className={SignInCss.labelContainer}>
             <label htmlFor="password">Password: </label>
             <CustomInput
               hint={"Enter your password"}
@@ -130,7 +133,7 @@ const SignInComponent = () => {
             </p>
           )}
 
-          <div className="button-wrapper">
+          <div className={SignInCss.buttonWrapper}>
             <CustomButton
               text={"Login"}
               buttonType={ButtonType.PRIMARY}
