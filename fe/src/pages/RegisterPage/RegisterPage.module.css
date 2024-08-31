@@ -7,7 +7,7 @@
   margin-right: auto;
   margin-top: 4vh;
   box-shadow: var(--shadow-1);
-  
+  border-radius: 8px;
 }
 
 .leftContainer, .rightContainer {
@@ -21,6 +21,8 @@
 
 .leftContainer {
   /* background: var(--black-5); */
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
   color: var(--black);
   padding-top:48px;
   padding-left: 32px;
@@ -56,15 +58,16 @@
   /* justify-content: space-around; */
   align-items: start;
   width: 100%;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
   /* gap: 100px; */
 }
 
 .greetContainer {
   width: 100%;
-  height:336px;
-  margin-top:48px;
-  margin-left: 32px;
-  margin-right:auto;
+  height:344px;
+  margin-top:20px;
+  padding-top:20px;
   display: flex;
   flex-direction: column;
   align-items: start;
@@ -75,12 +78,14 @@
   font-weight:900;
   line-height: 22px;
   letter-spacing: 2.25px;
+  padding-left: 32px;
 }
 .greetContainer span{
   font-size: 22px;
   font-weight: 900;
   line-height: 16px;
   letter-spacing: 2.25px;
+  padding-left: 32px;
 }
 .queryLabel{
   display: flex;
