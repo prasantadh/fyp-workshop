@@ -1,0 +1,38 @@
+services:
+  db:
+    image: postgres
+    restart: always
+    user: postgres
+    volumes:
+      - ./db/init.sql:/docker-entrypoint-initdb.d/00-create-db.sql
+    environment:
+      - POSTGRES_USER
+      - POSTGRES_DB
+      - POSTGRES_PASSWORD
+    ports:
+      - 5432:5432
+
+  backend:
+    build:
+      context: be
+    stop_signal: SIGINT
+    environment:
+      - DB_USER=${POSTGRES_USER}
+      - DB_PASSWORD=${POSTGRES_PASSWORD}
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_NAME=${POSTGRES_DB}
+    ports:
+      - 8000:8000
+    # https://apple.stackexchange.com/questions/431846/toggle-airplay-receiver-server-with-the-command-line-on-macos-monteray
+    # because mac apparently uses port 5000 for airplay receiver
+    links:
+      - db
+
+  frontend:
+    build:
+      context: fe 
+    ports:
+      - 3000:3000
+    links:
+      - backend
