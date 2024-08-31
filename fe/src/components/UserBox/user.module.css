@@ -1,0 +1,17 @@
+.circularProfile {
+  flex: 1;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: #000;
+  display: flex;
+  justify-content: center;
+  color: white;
+  align-items: center;
+  font-size: 40px;
+  font-weight: bold;
+}
+
+.flex {
+  display: flex;
+}
