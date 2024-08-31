@@ -159,6 +159,7 @@ const HomePage = () => {
       }}
     >
       {users &&
+        users.length > 0 &&
         feeds.map((item, index) => {
           let currentUser = users.find((user) => user.id === item.user_id);
 

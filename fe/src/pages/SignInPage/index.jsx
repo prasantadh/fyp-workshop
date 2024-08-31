@@ -5,6 +5,7 @@ import CustomInput from "../../components/Input";
 import { guestInstance } from "../../utils/axios";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { getUsers } from "../../utils/Users";
 
 const SignInComponent = () => {
   const navigate = useNavigate();
@@ -25,13 +26,21 @@ const SignInComponent = () => {
     setIncorrectData(null);
   };
 
+  function setCookie(name, value, days = 7) {
+    const d = new Date();
+    d.setTime(d.getTime() + days * 24 * 60 * 60 * 1000);
+    const expires = "expires=" + d.toUTCString();
+    document.cookie = name + "=" + value + ";" + expires + ";path=/";
+    localStorage.clear("users");
+  }
+
   const onHandelSubmit = () => {
     guestInstance
       .post("/users", {
         username,
         password,
       })
-      .then(function (response) {
+      .then(async function (response) {
         console.log(response);
         if (response.data) {
           if (response.data.status === "failure") {
@@ -39,7 +48,10 @@ const SignInComponent = () => {
             setIncorrectData(response.data.data);
           } else {
             toast.success(response.data.status);
-            document.cookie = "tokenFromServer=" + response.data.data;
+
+            setCookie("tokenFromServer", response.data.data);
+
+            const user = await getUsers();
             window.location.reload();
           }
         } else {
