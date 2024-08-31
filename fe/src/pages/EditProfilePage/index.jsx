@@ -12,10 +12,12 @@ import { format, parseISO } from "date-fns";
 import style from "./profile.module.css";
 import CustomButton from "../../components/Button";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import { json, useNavigate } from "react-router-dom";
 import WriteIcon from "../../components/icons/WriteIcon";
 import Modal from "../../components/Modal";
 import CustomInput from "../../components/Input";
+import { getUsers } from "../../utils/Users";
+import UserBox from "../../components/UserBox";
 
 const formatDate = (dateString) => {
   // Parse the string to a Date object and format it
@@ -27,6 +29,8 @@ const EditProfilePage = () => {
   const [user, setUser] = useState();
   const [followers, setFollowers] = useState(null);
   const [tweets, setTweets] = useState(null);
+
+  const [isOpenFollowerModal, setIsOpenFollowerModal] = useState(false);
 
   const navigate = useNavigate();
 
@@ -143,15 +147,128 @@ const EditProfilePage = () => {
     }
   }, [navigate]);
 
+  const FollowerModal = ({ onCancel }) => {
+    const navigate = useNavigate();
+    const [follows, setFollows] = useState([]);
+
+    useEffect(() => {
+      authenticAxiosInstance
+        .get("/follows")
+        .then(function (response) {
+          console.log(response);
+          if (response.data) {
+            if (response.data.status === "failure") {
+              toast.error(response.data.data);
+            } else {
+              toast.success("Followers: " + response.data.status);
+              console.log(response.data.data);
+              setFollows(response.data.data);
+            }
+          } else {
+            toast.error("Followers: Something Went Wrong.");
+          }
+        })
+        .catch(function (error) {
+          if (error.response) {
+            console.log(error.response.data);
+
+            let invalid = checkForInvalidOrExpiredToken(
+              error.response.data.msg
+            );
+
+            if (invalid) {
+              navigate("/login");
+              toast.error("You need to login");
+            } else {
+              console.log("Error 0", error.response.data);
+            }
+          }
+        });
+    }, []);
+
+    // const [followesData, setfollowesData] = useState([]);
+
+    // useEffect(() => {
+    //   //TODO
+    //   setfollowesData([]);
+
+    //   const idList = followers.map((item) => item.id);
+
+    //   // Filter users whose id is not in the ids array
+    //   const usersNotInList = users.filter((user) => !idList.includes(user.id));
+
+    //   console.log("followers ", usersNotInList);
+
+    //   setfollowesData(usersNotInList);
+    // }, [users]);
+
+    // console.log(followesData);
+
+    return (
+      <Tabs>
+        <TabList>
+          <Tab>Followers {followers ? followers.length : "0"}</Tab>
+          <Tab>Following {follows ? follows.length : "0"}</Tab>
+        </TabList>
+
+        <TabPanel>
+          {followers &&
+            followers.map((item) => {
+              console.log("Followes?? ", item);
+
+              return (
+                <UserBox
+                  user={item}
+                  followerList={follows}
+                  isFollowed={false}
+                />
+              );
+            })}
+        </TabPanel>
+        <TabPanel>
+          {follows &&
+            follows.map((item) => {
+              console.log("Followes?? ", item);
+
+              return (
+                <UserBox user={item} followerList={[]} isFollowed={true} />
+              );
+            })}
+        </TabPanel>
+      </Tabs>
+    );
+  };
+
   return (
     <>
+      <Modal
+        isOpen={isOpenFollowerModal}
+        onClose={() => {
+          setIsOpenFollowerModal(false);
+        }}
+        children={
+          <FollowerModal
+            onCancel={() => {
+              setIsOpenFollowerModal(false);
+            }}
+          />
+        }
+      />
+
       <div className={`${style.main}`}>
         {user && (
           <div className={`${style.user_info}`}>
             <div className={`${style.frame_19}`}>
               <h3>{user.username}</h3>
               {followers ? (
-                <h2> {followers.length} followers</h2>
+                <h2
+                  onClick={() => {
+                    setIsOpenFollowerModal(true);
+                  }}
+                >
+                  {" "}
+                  {followers.length} followers
+                </h2>
               ) : (
                 <h2>....</h2>
               )}
@@ -373,7 +490,7 @@ const SinglePost = ({ user, tweet }) => {
         <div className={style.postRightContainer}>
           <div className={style.singlePostHeaderContainer}>
             <div className={style.singlePostHeader}>
-              <h2>{openDeleteConfirmBox ? "Yes" : "No"}</h2>
+              <h2>{}</h2>
               <p>{formatDate(tweet.created_at)}</p>
             </div>
             <div className={style.dropdown}>
