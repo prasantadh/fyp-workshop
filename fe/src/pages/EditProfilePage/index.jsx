@@ -429,13 +429,15 @@ const UpdateModal = ({ tweet, onCancel }) => {
   );
 };
 
-const SinglePost = ({ user, tweet }) => {
+export const SinglePost = ({ user, tweet }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const [openDeleteConfirmBox, setOpenDeleteConfirmBox] = useState(false);
   const [openUpdateModal, setOpenUpdateModal] = useState(false);
 
   const modalRef = useRef(null); // Ref for modal
+
+  console.log(console.log("Given ", user));
 
   // Function to handle click outside the modal
   useEffect(() => {
@@ -485,12 +487,12 @@ const SinglePost = ({ user, tweet }) => {
 
       <div className={`${style.singlePost}`}>
         <div className={`${style.singleCircularProfile}`}>
-          {user.username.slice(0, 1).toUpperCase()}
+          {user && user.username && user.username.slice(0, 1).toUpperCase()}
         </div>
         <div className={style.postRightContainer}>
           <div className={style.singlePostHeaderContainer}>
             <div className={style.singlePostHeader}>
-              <h2>{}</h2>
+              <h2>{user.username}</h2>
               <p>{formatDate(tweet.created_at)}</p>
             </div>
             <div className={style.dropdown}>

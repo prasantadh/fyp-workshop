@@ -32,7 +32,6 @@ const SearchPage = () => {
   useEffect(() => {
     const getUserFromLocal = async () => {
       const data = JSON.parse(localStorage.getItem("users"));
-      toast("users//");
 
       if (!data) {
         const user = await getUsers();
