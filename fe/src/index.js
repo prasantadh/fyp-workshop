@@ -12,6 +12,7 @@ import { AuthRoute } from "./components/AuthRoute";
 import EditProfilePage from "./pages/EditProfilePage";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import SearchPage from "./pages/SearchPage/SearchPage";
+import HomePage from "./pages/HomePage";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -38,7 +39,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <h2>Test</h2>,
+        element: <HomePage />,
       },
       {
         path: "/search",
@@ -53,7 +54,7 @@ const router = createBrowserRouter([
 ]);
 
 root.render(
-  <React.StrictMode>
+  <>
     <RouterProvider router={router} />
 
     <a
@@ -77,7 +78,7 @@ root.render(
       gutter={8}
       containerClassName=""
     />
-  </React.StrictMode>
+  </>
 );
 
 // If you want to start measuring performance in your app, pass a function
