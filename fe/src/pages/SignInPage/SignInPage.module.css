@@ -1,56 +1,74 @@
-.login-main-container {
-  display: flex;
+.mainContainer {
+  /* display: flex;
   width: 100%;
-  height: 100vh;
+  height: 100vh; */
   /* background-color: rgb(243, 184, 184); */
+  display: flex;
+  width: 1200px;
+  height: 642px;
+  position: absolute;
+  margin-left: 120px;
+  margin-right: auto;
+  margin-top: 4vh;
+  box-shadow: var(--shadow-1);
+  border-radius: 8px;
 }
 
-.left-container,
-.right-container {
-  flex: 1;
+.leftContainer,
+.rightContainer {
+  /* flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: center; */
+  background: var(--black-5);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: left; 
+  align-items: left;
 }
 
-.left-container {
+.leftContainer {
   /* background: var(--gradient); */
   color: white;
   justify-content: space-around;
   align-items: start;
 }
 
-.right-container {
+.queryLabel{
+  
+}
+
+.rightContainer {
   background: var(--black-5);
 }
 
-.left-container h2 {
+.leftContainer h2 {
   font-size: 44px;
   margin-bottom: 8rem;
 }
 
-.left-button-container {
+.leftButtonContainer {
   /* width: 100%; */
   display: flex;
   flex-direction: column;
   align-items: start;
 }
 
-.right-container .label-container {
+.rightContainer .labelContainer {
   min-width: 60%;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
 }
 
-.right-container label {
+.rightContainer label {
   /* text-decoration: line-through; */
   font-size: var(--subtitle);
   font-weight: bold;
 }
-
-.button-wrapper {
+.buttonWrapper {
   width: 200px;
   margin-top: 10px;
 }
