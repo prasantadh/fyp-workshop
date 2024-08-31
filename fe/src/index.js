@@ -11,6 +11,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { AuthRoute } from "./components/AuthRoute";
 import EditProfilePage from "./pages/EditProfilePage";
 import { ProtectedRoute } from "./components/ProtectedRoute";
+import SearchPage from "./pages/SearchPage/SearchPage";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <h2>Test</h2>,
+      },
+      {
+        path: "/search",
+        element: <SearchPage />,
       },
       {
         path: "/profile",
